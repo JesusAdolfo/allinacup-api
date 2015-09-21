@@ -1,12 +1,15 @@
 'use strict';
 
 angular.module('restaurantApp')
-  .controller('ClientsRequestCtrl', function ($scope, $resource, DTOptionsBuilder, DTColumnBuilder, $compile, User, socket	) {
+  .controller('ClientsRequestCtrl', function ($scope, $resource, DTOptionsBuilder, DTColumnBuilder, $compile, Request, socket,notify	) {
     $scope.$parent.title = 'Requests';
     $scope.$parent.subTitle = 'all';
     $scope.$parent.setActive(2);
     $scope.dtInstance={};
-   
+    $scope.requests = [];
+    $scope.template = '';
+    $scope.classes = 'alert-success';
+    position: $scope.position = 'center';
 
     $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
         return $resource('api/client-requests').query().$promise;
@@ -17,7 +20,7 @@ angular.module('restaurantApp')
     .withOption('createdRow', createdRow);
 
     $scope.dtColumns = [
-        DTColumnBuilder.newColumn('user.name').withTitle('User'),        
+        DTColumnBuilder.newColumn('user.name').withTitle('User'),
         DTColumnBuilder.newColumn('request.status').withTitle('Status'),
         DTColumnBuilder.newColumn('request.createdAt').withTitle('Date requested'),
         DTColumnBuilder.newColumn('car.length').withTitle('Productos'),
@@ -39,7 +42,36 @@ angular.module('restaurantApp')
     	console.log(id);
  		//$location.path('/users/update/'+id);
     };
-    socket.socket.on('client-request:save',function(data){
-      console.log('response request',data);
+
+
+    Request.query().$promise.then(function(response){
+      $scope.requests = response;
+      //socket.unsyncNewOrders();
+      socket.getNewOrders(function(x){
+        console.log('===>');
+        $scope.requests.push(x[0]);
+      });
+
     });
+
+    $scope.process = function(order,index,type){
+      //console.log('Done',order);
+      /*car: Array[4]
+       createdAt: "15/9/2015 10:02 PM"
+       idUser: "1"
+       status: "requested"*/
+      //var send = {car:order.car, idUser:order.idUser, status:'requested', createdAt:order.createdAt};
+      //console.log('send',send);
+      order.update = type;
+      Request.update({id:order.request._id},order).$promise.then(function(response){
+        console.log('Done',response);
+        $scope.requests.splice(index,1);
+      });
+    }
+
+    /*socket.socket.on('client-request new',function(data){
+      console.log('response request',data);
+      //socket.socket.removeAllListeners('client-request new');
+    });*/
+    //socket.syncUpdates('client-request', $scope.awesomeThings);
   });

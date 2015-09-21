@@ -48,21 +48,21 @@ angular.module('restaurantApp')
            showCancelButton: true,
            confirmButtonColor: "#DD6B55",
            confirmButtonText: "Yes, delete it!",
-           closeOnConfirm: false}, 
-        function(){ 
+           closeOnConfirm: false},
+        function(){
            Products.remove({ id: id }).$promise.then(function(data) {
                 // success
                 SweetAlert.swal("Good job!", "Product has been deleted", "success");
             }, function(errResponse) {
                 // fail
             }).finally(function(){
-                // // fail  
+                // // fail
                 $scope.dtInstance.reloadData();
-                $scope.progressbar.stop();       
+                $scope.progressbar.stop();
             });
-        });        
+        });
     };
-    
+
   })
  .controller('NewProductsCtrl', function ($scope, $location, Upload, ngProgressFactory, SweetAlert) {
  	$scope.$parent.title = 'Products';
@@ -97,7 +97,8 @@ angular.module('restaurantApp')
 	        });
     	}
     }
- }).controller('UpdateProductsCtrl', function ($scope, $routeParams, $location, Upload, ngProgressFactory, SweetAlert, Products) {
+ })
+  .controller('UpdateProductsCtrl', function ($scope, $routeParams, $location, Upload, ngProgressFactory, SweetAlert, Products) {
  	$scope.$parent.title = 'Product #'+$routeParams.idProduct;
     $scope.$parent.subTitle = 'Edit';
     $scope.$parent.setActive(1);
@@ -105,21 +106,21 @@ angular.module('restaurantApp')
     $scope.progressbar = ngProgressFactory.createInstance();
     $scope.progressbar.start();
     /*Products.get({ id: $routeParams.idProduct }, function success(data, getResponseHeaders){
-        $scope.product = data;	
+        $scope.product = data;
   	},function error(err){
-        console.log('salida u==>',err);        
+        console.log('salida u==>',err);
     },function last(){
-        console.log('finally==>');   
-        $scope.progressbar.stop();       
+        console.log('finally==>');
+        $scope.progressbar.stop();
     });*/
     Products.get({ id: $routeParams.idProduct }).$promise.then(function(data) {
        // success
-       $scope.product = data;  
+       $scope.product = data;
     }, function(errResponse) {
        // fail
     }).finally(function(){
-        // // fail  
-        $scope.progressbar.stop();       
+        // // fail
+        $scope.progressbar.stop();
     });
      $scope.save = function(){
         $scope.$broadcast('show-errors-check-validity');
@@ -146,5 +147,5 @@ angular.module('restaurantApp')
             });
         }
     }
-    
+
 });

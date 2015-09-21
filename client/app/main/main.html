@@ -1,7 +1,7 @@
 
 
 <!--<header class="hero-unit" id="banner">
-  
+
     <h1>'Allo, 'Allo!</h1>
     <p class="lead">Kick-start your next web app with Angular Fullstack</p>
     <img src="assets/images/yeoman.png" alt="I'm Yeoman">
@@ -58,7 +58,7 @@
       </form>
     </div>
   </div>
-</div>  -->   
+</div>  -->
 <div class="container-fluid box box-primary">
   <div class="box-body">
       <div class="row">
@@ -69,12 +69,19 @@
           </br>
           </br>
           <h1 class="text-center">Welcome</h1>
+          <a id="demo" href="#" tabindex="0" class="btn btn-lg btn-danger" data-toggle="popover" data-trigger="hover" title="Dismissible popover" data-content="And here's some amazing content. It's very engaging. Right?">Dismissible popover</a>
           </br>
           </br>
           </br>
           </br>
           </br>
-        </div>     
+          <p>
+            <button tabindex="0" data-toggle="popover" popover="I appeared on mouse enter!" popover-trigger="mouseenter" type="button" class="btn btn-default">Mouseenter</button>
+          </p>
+        </div>
     </div>
   </div>
-</div>  
+</div>
+<script>
+  $('[data-toggle=popover]').popover();
+</script>

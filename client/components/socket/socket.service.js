@@ -17,6 +17,15 @@ angular.module('restaurantApp')
 
     return {
       socket: socket,
+      getNewOrders: function(cb){
+        cb = cb || angular.noop;
+        /**
+         * Syncs client-request new
+         */
+        socket.on('client-request new', function (item) {
+          cb(item);
+        });
+      },
 
       /**
        * Register listeners to sync an array with updates on a model
@@ -69,6 +78,9 @@ angular.module('restaurantApp')
       unsyncUpdates: function (modelName) {
         socket.removeAllListeners(modelName + ':save');
         socket.removeAllListeners(modelName + ':remove');
+      },
+      unsyncNewOrders: function () {
+        socket.removeAllListeners('client-request new');
       }
     };
   });

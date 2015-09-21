@@ -2,10 +2,100 @@
 <div class="box-header with-border">
   </div>
   <div class="box-body">
-      <div class="row">
+      <!--<div class="row">
        	<div class="col-md-12">
-			 <table datatable="" dt-options="dtOptions" dt-columns="dtColumns" dt-instance="dtInstance" class="row-border hover"></table>
-		</div>
+         <table datatable="" dt-options="dtOptions" dt-columns="dtColumns" dt-instance="dtInstance" class="row-border hover"></table>
+      </div>-->
+    <div ng-if="!requests.length" class="text-center col-md-12">
+      <h4><strong>There aren't any oders yet!</strong></h4>
+    </div>
+        <div id="{{request.request._id}} " ng-repeat="request in requests" class="col-md-12">
+          <div class="panel panel-primary">
+            <div class="panel-heading col-xs-12 col-sm-12 col-md-12">
+              <h3 class="panel-title col-xs-7 col-sm-7 col-md-7">Request #{{request.request._id}}</h3>
+              <div class="pull-right col-xs-5 col-sm-5 col-md-5 text-right">Status: {{request.request.status}} {{request.request.createdAt}}
+                <button ng-click="process(request,$index,1)" class="btn btn-success"data-toggle="tooltip" data-placement="top" title="Process it"><i class="fa fa-check"></i></button>
+                <button  ng-click="process(request,$index,0)" class="btn btn-danger"data-toggle="tooltip" data-placement="top" title="Cancel it"><i class="fa fa-close"></i></button></div>
+            </div>
+            <div class="panel-body">
+              <br/>
+              <div class="row" style="margin-left: 1em;">
+                <div class="col-md-12">
+                  <br/>
+                  <span style="font-size: 18px;"><b>Email:</b> </span>{{request.user.email}}<br/>
+                  <span style="font-size: 18px;"><b>Name:</b> </span>{{request.user.name}}<br/>
+                </div>
+              </div>
+              <hr/>
+              <div class="row">
+
+                <!-- <div  ng-repeat=" product in request.car" class="col-md-4" >
+                  <div style="margin-left: 1em;">
+                   <strong>Poduct #{{product._id}}</strong> <br/>
+                    <span style="font-size: 18px;"><b>Name:</b> </span>{{product.name}}<br/>
+                    <span style="font-size: 18px;"><b>Type:</b> </span>{{product.type}}<br/>
+                    <span style="font-size: 18px;"><b>Description:</b> </span>{{product.description}}<br/>
+                     <span style="font-size: 18px;"><b>Loyalty Points:</b> </span>{{product.loyaltyPoints}}<br/>
+                      <span style="font-size: 18px;"><b>Price:</b> </span><i class="fa fa-dollar"></i>{{product.price}}<br/>
+                       small box
+                      <div class="small-box bg-yellow">
+                        <div class="inner">
+                          <p><strong>Poduct: {{product.name}}</strong></p>
+                          <h3>{{request.request.car[$index].cant}}</h3>
+                          <p>New Orders</p>
+                        </div>
+                        <div class="icon">
+                          <i class="fa fa-shopping-cart"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">
+                          More info <i class="fa fa-arrow-circle-right"></i>
+                        </a>
+                      </div>
+                    </div>
+                    <hr/>
+                  </div>-->
+
+                <div class="col-md-12">
+                  <table class="table table-striped table-bordered">
+                    <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Product</th>
+                      <th>Product observation</th>
+                      <th>Cant</th>
+                      <th>Price <i class="fa fa-dollar"></i></th>
+                      <th>Total  <i class="fa fa-dollar"></i></th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <!--<tr>
+                      <td>Sum</td>
+                      <td>$180</td>
+                    </tr>
+                    </tfoot>-->
+                    <tbody>
+                    <tr ng-repeat=" product in request.car" >
+                      <td>{{product._id}}</td>
+                      <td>{{product.name}}</td>
+                      <td ng-if="request.request.car[$index].observation.length>30" style="width:50px;"><textarea ng-disabled="true" ng-model="request.request.car[$index].observation" cols="30" rows="2"></textarea> </td>
+                      <td ng-if="request.request.car[$index].observation.length<=30" style="width:50px;"><textarea ng-disabled="true" ng-model="request.request.car[$index].observation" cols="30" rows="1"></textarea> </td>
+                      <td><input type="number" min="0" max="{{request.request.car[$index].cant}}" ng-model="request.request.car[$index].cantA" ng-value="request.request.car[$index].cant"/></td>
+                      <td>{{product.price}}</td>
+                      <!--<td><button class="btn btn-success"><i class="fa fa-check"></i></button> <button class="btn btn-danger"><i class="fa fa-close"></i></button></td>-->
+                      <td>{{product.price|itemTotal:request.request.car[$index].cantA}}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+              Total: <i class="fa fa-dollar"></i> {{request|total}}
+            </div>
+          </div>
+        </div>
     </div>
   </div>
-</div>  
+</div>
+<script>
+  $('[data-toggle=popover]').popover();
+</script>

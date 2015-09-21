@@ -93,14 +93,15 @@ UserSchema
 }, 'The specified email address is already in use.');
 
 var validatePresenceOf = function(value, last) {
-  return value && value.length && last.length>5;
+  //last.length>5
+  return value && value.length && last.length>1;
 };
 
 /**
  * Pre-save hook
  */
 UserSchema
-  .pre('save', function(next) {    
+  .pre('save', function(next) {
     if (!this.isNew) return next();
     if (!validatePresenceOf(this.hashedPassword,this._password))
       next(new Error('Invalid password'));

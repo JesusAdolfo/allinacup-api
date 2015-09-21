@@ -7,13 +7,14 @@ angular.module('restaurantApp', [
   'ngRoute',
   'btford.socket-io',
   'ui.bootstrap',
-  'datatables', 
+  'datatables',
   'datatables.bootstrap',
   'ng-breadcrumbs',
   'ngFileUpload',
   'ui.bootstrap.showErrors',
   'ngProgress',
-  'oitozero.ngSweetAlert'
+  'oitozero.ngSweetAlert',
+  'cgNotify'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider, showErrorsConfigProvider) {
     $routeProvider
@@ -50,20 +51,38 @@ angular.module('restaurantApp', [
         }
       }
     };
-  }).controller('appCtrl', function ($rootScope, $scope, $http, Auth, socket, breadcrumbs) {
+  }).controller('appCtrl', function ($rootScope, $scope, $http, Auth, socket, notify, breadcrumbs, $location) {
 
-    //$rootScope.isLogged=false;   
+    //$rootScope.isLogged=false;
+
     $scope.breadcrumbs = breadcrumbs;
     $scope.title = '';
     $scope.subTitle = '';
     $scope.actives=[false,false,false];
-    $scope.setActive = function(x){      
+    $scope.setActive = function(x){
       try{
         $scope.actives[x]=true;
       }catch(ex){}
-      angular.forEach($scope.actives,function(value, key){        
+      angular.forEach($scope.actives,function(value, key){
         if(key!=x)$scope.actives[key]=false;
       });
+    }
+    socket.unsyncNewOrders();
+    socket.getNewOrders(function(x){
+
+      var messageTemplate = '<span>You have a new order '+x[0].request._id+' <a href="" ng-click=\'clickedLink('+JSON.stringify(x[0].request._id)+')\'>check it out</a>. '+ '</span>';
+
+      notify({
+        messageTemplate: messageTemplate,
+        classes: $scope.classes,
+        scope:$scope,
+        templateUrl: $scope.template,
+        position: $scope.position,
+      });
+    });
+    $scope.clickedLink = function (id){
+      console.log('/clients-request#'+id);
+      $location.path('/clients-request');
     }
   })
   .run(function ($rootScope ,$location, Auth) {

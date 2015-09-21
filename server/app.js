@@ -46,9 +46,9 @@ var multipartMiddleware = multipart({ uploadDir: "./server/img" });
 */
 app.post('/upload', multipartMiddleware, function(req, res) {
   console.log(req.body, req.files);
-  // don't forget to delete all req.files when done 
+  // don't forget to delete all req.files when done
   res.status(201).json({});
 });
 
 // Expose app
-exports = module.exports = app;
+module.exports = app;

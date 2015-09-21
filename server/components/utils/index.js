@@ -47,8 +47,8 @@ module.exports = {
       fs.mkdirSync('./server');
 
     var dir_aux = '';
-    try {      
-      _.forEach(path.split('/'), function(path_section){          
+    try {
+      _.forEach(path.split('/'), function(path_section){
         if (path_section !== ''){
           dir_aux += path_section + '/';
           if (!fs.existsSync(dir_aux))
@@ -81,10 +81,10 @@ module.exports = {
 
       // set where the file should actually exists - in this case it is in the "images" directory
 
-      var target_path = path+file.path.split("tmp/")[1];//+target+'_'+id+'.'+file.name.split(".")[1];
+      var target_path = path+tmp_path.split("tmp/")[1];//+target+'_'+id+'.'+file.name.split(".")[1];
 
       try {
-       
+
         // move the file from the temporary location to the intended location
        fs.renameSync(tmp_path, target_path);
         //fs.unlinkSync(tmp_path);
@@ -99,7 +99,7 @@ module.exports = {
   },
   deletePath : function(path){
     try{
-      
+
       /*if(!file)
         return true;*/
       if(!path)
@@ -110,6 +110,61 @@ module.exports = {
     catch(ex){
       return false;
     }
-}
+  },
+  setUserLvl : function(user, points, requiredPoints){
+    user.loyaltyPoints+=points;
+    console.log('loyaltyPoints',user.loyaltyPoints);
+    console.log('requiredPoints',requiredPoints);
+    if(user.loyaltyPoints>=requiredPoints){
+      user.loyaltyPoints= user.loyaltyPoints - requiredPoints;
+      user.lvl++;
+    }
+    return user;
+  },
+  getLvls : function(){
+    var lvls = [
+      {
+        "lvl":1,
+        "points":50000
+      },
+      {
+        "lvl":2,
+        "points":100000
+      },
+      {
+        "lvl":3,
+        "points":150000
+      },
+      {
+        "lvl":4,
+        "points":200000
+      },
+      {
+        "lvl":5,
+        "points":250000
+      },
+      {
+        "lvl":6,
+        "points":300000
+      },
+      {
+        "lvl":7,
+        "points":350000
+      },
+      {
+        "lvl":8,
+        "points":400000
+      },
+      {
+        "lvl":9,
+        "points":450000
+      },
+      {
+        "lvl":10,
+        "points":500000
+      }
+    ]
+    return lvls;
+  }
 
 };

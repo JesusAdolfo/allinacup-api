@@ -3,7 +3,7 @@
 angular.module('restaurantApp')
   .config(function ($routeProvider) {
     $routeProvider
-      .when('/login', {
+      .when('/login', {//client\bower_components\admin-lte\pages\examples
         templateUrl: 'app/account/login/login.html',
         controller: 'LoginCtrl'
       })

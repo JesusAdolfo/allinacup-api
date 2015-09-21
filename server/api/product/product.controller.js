@@ -18,7 +18,7 @@ exports.show = function(req, res) {
     if(err) { return handleError(res, err); }
     if(!product) { return res.status(404).send('Not Found'); }
     return res.json(product);
-  }); 
+  });
 };
 
 // Get a single product
@@ -27,14 +27,15 @@ exports.findByType = function(req, res) {
     if(err) { return handleError(res, err); }
     if(!product) { return res.status(404).send('Not Found'); }
     return res.json(product);
-  }); 
+  });
 };
 
 // Creates a new product in the DB.
 exports.create = function(req, res) {
+  console.log(req.files.file);
   var result = utils.moveFromTempTo(req.files.file,'products');
   if(!result.error){
-    req.body.image = result.value;  
+    req.body.image = result.value;
   }
   Product.create(req.body, function(err, product) {
     if(err) { return handleError(res, err); }
@@ -49,10 +50,11 @@ exports.update = function(req, res) {
   Product.findById(req.params.id, function (err, product) {
     if (err) { return handleError(res, err); }
     if(!product) { return res.status(404).send('Not Found'); }
-  
+
       var result = utils.moveFromTempTo(req.files.file,'products');
-      if(!result.error){
-        req.body.image = result.value;  
+      if(result.error!=null){
+        console.log(result.error);
+        req.body.image = result.value;
         if(!utils.deletePath(product.image)) return res.status(500).send('image error deleting');
       }
       var updated = _.merge(product, req.body);
@@ -68,7 +70,7 @@ exports.destroy = function(req, res) {
   Product.findById(req.params.id, function (err, product) {
     if(utils.deletePath(product.image),1){
       if(err) { return handleError(res, err); }
-      if(!product) { return res.status(404).send('Not Found'); }  
+      if(!product) { return res.status(404).send('Not Found'); }
       product.remove(function(err) {
         if(err) { return handleError(res, err); }
         return res.status(204).send('No Content');

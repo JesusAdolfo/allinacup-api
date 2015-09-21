@@ -17,7 +17,7 @@ angular.module('restaurantApp')
     .withOption('createdRow', createdRow);
 
     $scope.dtColumns = [
-        DTColumnBuilder.newColumn('_id').withTitle('ID'),        
+        DTColumnBuilder.newColumn('_id').withTitle('ID'),
         DTColumnBuilder.newColumn('email').withTitle('Username'),
         DTColumnBuilder.newColumn('name').withTitle('Name'),
         DTColumnBuilder.newColumn(null).withTitle('Actions').notSortable()
@@ -48,8 +48,8 @@ angular.module('restaurantApp')
            showCancelButton: true,
            confirmButtonColor: "#DD6B55",
            confirmButtonText: "Yes, delete it!",
-           closeOnConfirm: false}, 
-        function(){ 
+           closeOnConfirm: false},
+        function(){
             $scope.progressbar.start();
            User.remove({ id: id }).$promise.then(function(data) {
                 // success
@@ -58,14 +58,15 @@ angular.module('restaurantApp')
                 // fail
                 SweetAlert.swal("Alert!", errResponse.data, "error");
             }).finally(function(){
-                // // fail  
+                // // fail
                 $scope.dtInstance.reloadData();
-                $scope.progressbar.stop();       
+                $scope.progressbar.stop();
             });
-        });        
+        });
     };
-    
-}).controller('NewUsersCtrl', function ($scope, $location, ngProgressFactory, SweetAlert, User) {
+
+})
+  .controller('NewUsersCtrl', function ($scope, $location, ngProgressFactory, SweetAlert, User) {
  	$scope.$parent.title = 'User';
     $scope.$parent.subTitle = 'New';
     $scope.$parent.setActive(0);
@@ -87,12 +88,13 @@ angular.module('restaurantApp')
                 console.log(errResponse)
                 SweetAlert.swal("Alert!", errResponse.data, "error");
             }).finally(function(){
-                // // fail  
-                $scope.progressbar.stop();       
+                // // fail
+                $scope.progressbar.stop();
             });
     	}
     }
- }).controller('UpdateUsersCtrl', function ($scope, $location, $routeParams, ngProgressFactory, SweetAlert, User) {
+ })
+  .controller('UpdateUsersCtrl', function ($scope, $location, $routeParams, ngProgressFactory, SweetAlert, User) {
     $scope.$parent.title = 'User #'+$routeParams.idUser;
     $scope.$parent.subTitle = 'update';
     $scope.$parent.setActive(0);
@@ -102,14 +104,14 @@ angular.module('restaurantApp')
     $scope.progressbar.start();
     User.get({ id: $routeParams.idUser }).$promise.then(function(data) {
        // success
-       $scope.user = data; 
+       $scope.user = data;
     }, function(errResponse) {
        // fail
        SweetAlert.swal("Alert!", errResponse.error, "error");
         $location.path('/users');
     }).finally(function(){
-        // // fail  
-        $scope.progressbar.stop();       
+        // // fail
+        $scope.progressbar.stop();
     });
 
     $scope.save = function(){
@@ -125,8 +127,8 @@ angular.module('restaurantApp')
                 // fail
                 SweetAlert.swal("Alert!", "There was a problem", "error");
             }).finally(function(){
-                // // fail  
-                $scope.progressbar.stop();       
+                // // fail
+                $scope.progressbar.stop();
             });
         }
     }

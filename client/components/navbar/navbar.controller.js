@@ -1,10 +1,23 @@
 'use strict';
 
 angular.module('restaurantApp')
-  .controller('NavbarCtrl', function ($rootScope, $scope, $location, Auth) {
+  .controller('NavbarCtrl', function ($rootScope, $scope, $location, Auth, $timeout, $compile) {
     $("#layout").removeAttr( "style" );
-      $.AdminLTE.pushMenu.activate("[data-toggle='offcanvas']"); 
-      $.AdminLTE.layout.activate();
+
+    $.AdminLTE.pushMenu.activate("[data-toggle='offcanvas']");
+    $.AdminLTE.layout.fix();
+    var o = $.AdminLTE.options;
+    $compile($('nav'))($scope);
+
+    $timeout(function(){
+      $(".navbar .menu").slimscroll({
+        height: o.navbarMenuHeight,
+        alwaysVisible: false,
+        size: o.navbarMenuSlimscrollWidth
+      }).css("width", "100%");
+      $scope.$apply;
+      //$compile($('nav'))($scope);
+     },100);
 
     $scope.menu = [{
       'title': 'Home',
@@ -15,7 +28,7 @@ angular.module('restaurantApp')
     $scope.isLoggedIn = Auth.isLoggedIn;
     $scope.isAdmin = Auth.isAdmin;
     $scope.getCurrentUser = Auth.getCurrentUser;
-
+    $scope.p="dsadas";
     $scope.logout = function() {
       Auth.logout();
       $rootScope.isLogged=false;
