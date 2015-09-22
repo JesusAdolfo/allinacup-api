@@ -49,19 +49,21 @@ angular.module('restaurantApp')
            confirmButtonColor: "#DD6B55",
            confirmButtonText: "Yes, delete it!",
            closeOnConfirm: false},
-        function(){
+        function(isConfirm){
+          if (isConfirm) {
             $scope.progressbar.start();
-           User.remove({ id: id }).$promise.then(function(data) {
-                // success
-                SweetAlert.swal("Good job!", "User has been deleted", "success");
+            User.remove({ id: id }).$promise.then(function(data) {
+              // success
+              SweetAlert.swal("Good job!", "User has been deleted", "success");
             }, function(errResponse) {
-                // fail
-                SweetAlert.swal("Alert!", errResponse.data, "error");
+              // fail
+              SweetAlert.swal("Alert!", errResponse.data, "error");
             }).finally(function(){
-                // // fail
-                $scope.dtInstance.reloadData();
-                $scope.progressbar.stop();
+              // // fail
+              $scope.dtInstance.reloadData();
+              $scope.progressbar.stop();
             });
+          }
         });
     };
 

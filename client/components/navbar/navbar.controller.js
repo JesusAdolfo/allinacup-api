@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('restaurantApp')
-  .controller('NavbarCtrl', function ($rootScope, $scope, $location, Auth, $timeout, $compile) {
+  .controller('NavbarCtrl', function ($rootScope, $scope, $location, Auth, $timeout, $compile, User) {
     $("#layout").removeAttr( "style" );
 
     $.AdminLTE.pushMenu.activate("[data-toggle='offcanvas']");
@@ -27,7 +27,8 @@ angular.module('restaurantApp')
     $scope.isCollapsed = true;
     $scope.isLoggedIn = Auth.isLoggedIn;
     $scope.isAdmin = Auth.isAdmin;
-    $scope.getCurrentUser = Auth.getCurrentUser;
+    $scope.user = User.get();;
+    console.log($scope.user);
     $scope.p="dsadas";
     $scope.logout = function() {
       Auth.logout();

@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('restaurantApp')
-  .controller('ProductsCtrl', function ($resource, $location, $scope, DTOptionsBuilder, DTColumnBuilder, $compile, SweetAlert, Products) {
+  .controller('ProductsCtrl', function ($resource, $location, $scope, DTOptionsBuilder, DTColumnBuilder, $compile, SweetAlert, Products, ngProgressFactory) {
     $scope.$parent.title = 'Products';
     $scope.$parent.subTitle = 'all';
+    $scope.progressbar = ngProgressFactory.createInstance();
     $scope.$parent.setActive(1);
 	$scope.dtInstance={};
     $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
@@ -18,7 +19,7 @@ angular.module('restaurantApp')
         DTColumnBuilder.newColumn('_id').withTitle('ID'),
         DTColumnBuilder.newColumn('name').withTitle('Name'),
         DTColumnBuilder.newColumn('loyaltyPoints').withTitle('Loyalty points'),
-        DTColumnBuilder.newColumn('price').withTitle('Price $'),
+        DTColumnBuilder.newColumn('price').withTitle('Price <i class="fa fa-krw"></i>'),
         DTColumnBuilder.newColumn(null).withTitle('Actions').notSortable()
             .renderWith(actionsHtml)
        // DTColumnBuilder.newColumn('lastName').withTitle('Last name').notVisible()
@@ -41,7 +42,7 @@ angular.module('restaurantApp')
  		$location.path('/products/update/'+id);
     };
     $scope.delete = function (id){
-        SweetAlert.swal({
+        /*SweetAlert.swal({
         title: "Are you sure?",
            text: "This product will be delete",
            type: "warning",
@@ -60,6 +61,29 @@ angular.module('restaurantApp')
                 $scope.dtInstance.reloadData();
                 $scope.progressbar.stop();
             });
+        });*/
+      SweetAlert.swal({
+          title: "Are you sure?",
+          text: "This product will be delete",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "Yes, delete it!",
+          closeOnConfirm: false},
+        function(isConfirm){
+          if (isConfirm) {
+            $scope.progressbar.start();
+            Products.remove({ id: id }).$promise.then(function(data) {
+              // success
+              SweetAlert.swal("Good job!", "Product has been deleted", "success");
+            }, function(errResponse) {
+              // fail
+            }).finally(function(){
+              // // fail
+              $scope.dtInstance.reloadData();
+              $scope.progressbar.stop();
+            });
+          }
         });
     };
 

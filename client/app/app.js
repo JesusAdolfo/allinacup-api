@@ -71,14 +71,16 @@ angular.module('restaurantApp', [
     socket.getNewOrders(function(x){
 
       var messageTemplate = '<span>You have a new order '+x[0].request._id+' <a href="" ng-click=\'clickedLink('+JSON.stringify(x[0].request._id)+')\'>check it out</a>. '+ '</span>';
+      if(Auth.isLoggedIn()){
+        notify({
+          messageTemplate: messageTemplate,
+          classes: $scope.classes,
+          scope:$scope,
+          templateUrl: $scope.template,
+          position: $scope.position,
+        });
+      }
 
-      notify({
-        messageTemplate: messageTemplate,
-        classes: $scope.classes,
-        scope:$scope,
-        templateUrl: $scope.template,
-        position: $scope.position,
-      });
     });
     $scope.clickedLink = function (id){
       console.log('/clients-request#'+id);

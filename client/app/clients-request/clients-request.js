@@ -5,7 +5,8 @@ angular.module('restaurantApp')
     $routeProvider
       .when('/clients-request', {
         templateUrl: 'app/clients-request/clients-request.html',
-        controller: 'ClientsRequestCtrl'
+        controller: 'ClientsRequestCtrl',
+        authenticate: true,
       });
   });
 
