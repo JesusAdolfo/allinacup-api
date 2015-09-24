@@ -6,6 +6,8 @@ angular.module('restaurantApp')
     $scope.errors = {};
     $scope.submitted = {};
     $scope.$apply;
+    $scope.user.email='admin@admin.com';
+    $scope.user.password='admin';
     $scope.login = function(form) {
       $scope.submitted.get = true;
 

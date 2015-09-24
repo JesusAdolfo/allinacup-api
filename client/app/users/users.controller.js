@@ -113,6 +113,7 @@ angular.module('restaurantApp')
         $location.path('/users');
     }).finally(function(){
         // // fail
+      console.log('error<----');
         $scope.progressbar.stop();
     });
 
