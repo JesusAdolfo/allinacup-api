@@ -25,7 +25,8 @@
     "socket.io-client": "^1.0.6",
     "socketio-jwt": "^3.0.0",
     "mongoose-auto-increment": "~4.0.0",
-    "connect-multiparty": "~2.0.0"
+    "connect-multiparty": "~2.0.0",
+    "request": "~2.63.0"
   },
   "devDependencies": {
     "grunt": "~0.4.4",
