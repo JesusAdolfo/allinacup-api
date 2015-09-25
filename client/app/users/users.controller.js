@@ -19,7 +19,7 @@ angular.module('restaurantApp')
     $scope.dtColumns = [
         DTColumnBuilder.newColumn('_id').withTitle('ID'),
         DTColumnBuilder.newColumn('email').withTitle('Username'),
-        DTColumnBuilder.newColumn('name').withTitle('Name'),
+        DTColumnBuilder.newColumn('first_name').withTitle('Name'),
         DTColumnBuilder.newColumn(null).withTitle('Actions').notSortable()
             .renderWith(actionsHtml)
        // DTColumnBuilder.newColumn('lastName').withTitle('Last name').notVisible()

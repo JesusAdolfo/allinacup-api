@@ -33,13 +33,29 @@ exports.create = function (req, res, next) {
   //newUser.role = 'user';
   newUser.save(function(err, user) {
     if (err) return validationError(res, err);
-    var token = jwt.sign({_id: user._id }, config.secrets.session, { expiresInMinutes: 60*5 });
-    res.json({ token: token });
+    //var token = jwt.sign({_id: user._id }, config.secrets.session, { expiresInMinutes: 60*5 });
+    //res.json({ token: token });
+    res.json(user);
+  });
+};
+/**
+ * Creates a new costumer
+ */
+exports.createCostumer = function (req, res, next) {
+  var newUser = new User(req.body);
+  //console.log(req.body);
+  newUser.provider = 'local';
+  newUser.role = 'costumer';
+  newUser.save(function(err, user) {
+    if (err) return validationError(res, err);
+    //var token = jwt.sign({_id: user._id }, config.secrets.session, { expiresInMinutes: 60*5 });
+    //res.json({ token: token });
+    res.json(user.profile_app);
   });
 };
 // Updates an existing user in the DB.
 exports.update = function(req, res) {
- 
+
   if(req.body._id) { delete req.body._id; }
   User.findById(req.params.id, function (err, user) {
     if (err) { return handleError(res, err); }

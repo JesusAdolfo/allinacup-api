@@ -6,15 +6,18 @@ autoIncrement = require('mongoose-auto-increment');;
 var crypto = require('crypto');
 autoIncrement.initialize(mongoose);
 var UserSchema = new Schema({
-  name: String,
+  first_name: String,
   email: { type: String, lowercase: true },
   role: {
     type: String,
     default: 'user'
   },
-  lastName:String,
-  loyaltyPoints:Number,
-  lvl:Number,
+  last_name: String,
+  loyaltyPoints: {type: Number, default: 0},
+  phone_number: String,
+  address: String,
+  gender: String,
+  lvl:{type: Number, default: 1},
   hashedPassword: String,
   provider: String,
   salt: String
@@ -41,11 +44,25 @@ UserSchema
     return {
       '_id': this._id,
       'email': this.email,
-      'name': this.name,
+      'first_name': this.first_name,
       'role': this.role,
-      'lastName': this.lastName,
+      'last_name': this.last_name,
       'loyaltyPoints': this.loyaltyPoints,
       'lvl':this.lvl
+    };
+  });
+UserSchema
+  .virtual('profile_app')
+  .get(function() {
+    return {
+      'email': this.email,
+      'first_name': this.first_name,
+      'last_name': this.last_name,
+      'loyaltyPoints': this.loyaltyPoints,
+      'lvl':this.lvl,
+      'gender':this.gender,
+      'address': this.address,
+      'phone_number': this.phone_number
     };
   });
 

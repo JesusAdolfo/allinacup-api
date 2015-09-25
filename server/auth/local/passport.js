@@ -22,24 +22,14 @@ exports.setup = function (User, config) {
       });
     }
   ));
-  passport.use('local1',new LocalStrategy({
-      usernameField: 'email',
+  passport.use('facebook',new LocalStrategy({
+      usernameField: 'token',
       passwordField: 'password' // this is the virtual field on the model
     },
-    function(email, password, done) {
-      User.findOne({
-        email: email.toLowerCase()
-      }, function(err, user) {
-        if (err) return done(err);
+    function(token, done) {
 
-        if (!user) {
-          return done(null, false, { message: 'This email is not registered.' });
-        }
-        if (!user.authenticate(password)) {
-          return done(null, false, { message: 'This password or email is not correct.' });
-        }
-        return done(null, user);
-      });
+      console.log('token',token);
+      return done(null, token);
     }
   ));
 };
