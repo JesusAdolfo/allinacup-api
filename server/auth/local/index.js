@@ -60,7 +60,8 @@ router.post('/fb', function(req, res, next) {
             res.json({user:user});
             //res.json(user);
           });*/
-          var token = "ASDersdf==?SFdfdf[SDF+f";//jwt.sign({_id: user._id }, config.secrets.session, { expiresInMinutes: 60*5 });
+          //var token = "ASDersdf==?SFdfdf[SDF+f";
+          var token = jwt.sign({_id: user._id }, config.secrets.session, { expiresInMinutes: 60*5 });
           var result = user.profile_app;
           result.token=token;
           res.json(result);

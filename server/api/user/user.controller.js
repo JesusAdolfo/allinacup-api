@@ -43,7 +43,7 @@ exports.create = function (req, res, next) {
  */
 exports.createCostumer = function (req, res, next) {
   var newUser = new User(req.body);
-  //console.log(req.body);
+  console.log("creating a new user",req.body);
   newUser.provider = 'local';
   newUser.role = 'costumer';
   newUser.save(function(err, user) {
@@ -72,7 +72,6 @@ exports.update = function(req, res) {
  * Get a single user
  */
 exports.show = function (req, res, next) {
-  console.log('user==>',req.user)
   var userId = req.params.id;
 
   User.findById(userId, function (err, user) {
