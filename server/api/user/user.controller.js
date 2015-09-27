@@ -9,7 +9,7 @@ var _ = require('lodash');
 var validationError = function(res, err) {
   var er = ""+err;
   er.replace("[","").replace("]","")
-  return res.status(422).send(er);
+  return res.status(409).send(er);
 };
 
 /**
