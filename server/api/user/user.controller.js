@@ -72,7 +72,6 @@ exports.update = function(req, res) {
  * Get a single user
  */
 exports.show = function (req, res, next) {
-  console.log('user==>',req.user)
   var userId = req.params.id;
 
   User.findById(userId, function (err, user) {
