@@ -50,7 +50,7 @@ exports.createCostumer = function (req, res, next) {
     if (err) return validationError(res, err);
     //var token = jwt.sign({_id: user._id }, config.secrets.session, { expiresInMinutes: 60*5 });
     //res.json({ token: token });
-    res.json(user.profile_app);
+    res.status(201).json(user.profile_app);
   });
 };
 // Updates an existing user in the DB.
