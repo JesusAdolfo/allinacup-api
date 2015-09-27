@@ -20,7 +20,7 @@ router.post('/', function(req, res, next) {
   })(req, res, next)
 });
 router.post('/fb', function(req, res, next) {
-  //console.log('body==>',req.body);
+ console.log('body==>',req.body);
   request({
     uri: "https://graph.facebook.com/me?fields=email,first_name,last_name,gender&access_token="+req.body.facebook_token,
     method: "GET",
@@ -34,7 +34,8 @@ router.post('/fb', function(req, res, next) {
       res.status(400).json({"success":false,"error":"internal error"});
     }else{
 
-      User.find({email:body.email}, function (err, user) {
+     if(body.error){return res.status(409).json({"error":body.error.message});};
+	 User.find({email:body.email}, function (err, user) {
         user = user[0];
         if (err) return next(err);
         if (user){
