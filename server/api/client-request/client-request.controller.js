@@ -44,8 +44,8 @@ var joinWithUsers = function(client_requests,res,stop,result){
             return res.status(200).json([]);
           }
           console.log('---->');
-          if(stop>0)
-          return joinWithUsers(client_requests, res, stop, result);
+         // if(stop>0)
+          //return joinWithUsers(client_requests, res, stop, result);
         }
         if (user && stop>=0)
           result.push({request:client_requests[stop],user:user.profile,car:[]});
