@@ -7,6 +7,7 @@ angular.module('restaurantApp')
     $scope.$parent.setActive(2);
     $scope.dtInstance={};
     $scope.requests = [];
+    $scope.visibility = {show:[]};
     $scope.template = '';
     $scope.classes = 'alert-success';
     position: $scope.position = 'center';
@@ -45,11 +46,16 @@ angular.module('restaurantApp')
 
 
     Request.query().$promise.then(function(response){
-      $scope.requests = response;
+
       //socket.unsyncNewOrders();
+      angular.forEach(response,function(item){
+        $scope.visibility.show.push(true);
+      });
+      $scope.requests = response;
       socket.getNewOrders(function(x){
         console.log('===>');
         $scope.requests.push(x[0]);
+        $scope.visibility.show.push(true);
       });
 
     });
@@ -62,10 +68,13 @@ angular.module('restaurantApp')
        status: "requested"*/
       //var send = {car:order.car, idUser:order.idUser, status:'requested', createdAt:order.createdAt};
       //console.log('send',send);
+
       order.update = type;
       Request.update({id:order.request._id},order).$promise.then(function(response){
         console.log('Done',response);
-        $scope.requests.splice(index,1);
+        //$scope.visibility[index]=false;
+        $scope.visibility.show[index]=false;
+       // $scope.requests.splice(index,1);
       });
     }
 

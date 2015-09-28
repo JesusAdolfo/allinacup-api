@@ -14,7 +14,8 @@ angular.module('restaurantApp', [
   'ui.bootstrap.showErrors',
   'ngProgress',
   'oitozero.ngSweetAlert',
-  'cgNotify'
+  'cgNotify',
+  'ngAnimate'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider, showErrorsConfigProvider) {
     $routeProvider

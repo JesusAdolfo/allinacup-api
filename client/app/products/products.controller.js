@@ -88,7 +88,7 @@ angular.module('restaurantApp')
     };
 
   })
- .controller('NewProductsCtrl', function ($scope, $location, Upload, ngProgressFactory, SweetAlert) {
+  .controller('NewProductsCtrl', function ($scope, $location, Upload, ngProgressFactory, SweetAlert) {
  	$scope.$parent.title = 'Products';
     $scope.$parent.subTitle = 'New';
     $scope.$parent.setActive(1);

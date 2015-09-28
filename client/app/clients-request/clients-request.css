@@ -1,0 +1,14 @@
+.sample-show-hide {
+
+}
+
+.sample-show-hide {
+  -webkit-transition:all linear 0.6s;
+  transition:all linear 0.6s;
+}
+
+.sample-show-hide.ng-hide {
+  opacity:0;
+}
+
+

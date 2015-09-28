@@ -8,5 +8,5 @@ module.exports = {
     uri: 'localhost:27017'
   },
 ip:'0.0.0.0',
-  seedDB: true
+  seedDB: false
 };
