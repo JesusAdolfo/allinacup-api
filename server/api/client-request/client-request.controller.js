@@ -37,20 +37,20 @@ var joinWithUsers = function(client_requests,res,stop,result){
   console.log('stop---->',stop);
    User.findById(client_requests[stop].idUser, function (err, user) {
 
-       if (err) return next(err);
-        if (!user) {
-          if(client_requests.length==1){
-            ban=false;
-            return res.status(200).json([]);
-          }
-          console.log('---->');
+     if (err) return next(err);
+     if (!user) {
+       if(client_requests.length==1){
+         ban=false;
+         return res.status(200).json([]);
+       }
+       console.log('---->');
          // if(stop>0)
           //return joinWithUsers(client_requests, res, stop, result);
-        }
-        if (user && stop>=0)
-          result.push({request:client_requests[stop],user:user.profile,car:[]});
+     }
+     if (user && stop>=0)
+       result.push({request:client_requests[stop],user:user.profile,car:[]});
 
-        if(stop==0)
+     if(stop==0)
           //||join con un varios registros de una tabla
           //||params:
           //||1: data ,2: respuesta, 3: iteraciones del padre, 4: iteraciones de los id seran utilizados para el join
@@ -58,11 +58,17 @@ var joinWithUsers = function(client_requests,res,stop,result){
           //||ejem: [ { idPadre:1,idHijos:[{id:1}, {id:2}]}, {idPadre:2,idHijos:[{id:1}, {id:2}] } ]
           //||result: [ { Padre:{idPadre:1, idHijos:[{id:1},{id:2}] }, Hijos:[ {id:1, atributos},{id:2, atributos} ] },
           //|| { Padre:{ idPadre:2, idHijos:[{id:1},{id:2}] }, Hijos:[ {id:1, atributos},{id:2, atributos} ] } ]
-          return joinWithProducts(result, res, result.length, result[result.length-1].request.car.length);
-        if(stop>0)
-          joinWithUsers(client_requests, res, stop, result);
+     {
+       if(result.length>0){
+         return joinWithProducts(result, res, result.length, result[result.length - 1].request.car.length);
+       }else{
+         return res.status(200).json([]);
+       }
+     }
+     if(stop>0)
+       joinWithUsers(client_requests, res, stop, result);
 
-      });
+   });
 }
 
 var joinWithProducts = function (r,res,stop,count){
