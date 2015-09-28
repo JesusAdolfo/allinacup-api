@@ -47,7 +47,8 @@ var joinWithUsers = function(client_requests,res,stop,result){
           if(stop>0)
           return joinWithUsers(client_requests, res, stop, result);
         }
-     result.push({request:client_requests[stop],user:user.profile,car:[]});
+        if (user && stop>=0)
+          result.push({request:client_requests[stop],user:user.profile,car:[]});
 
         if(stop==0)
           //||join con un varios registros de una tabla
