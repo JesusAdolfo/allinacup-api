@@ -54,6 +54,7 @@ function hasRole(roleRequired) {
     });
 }
 
+
 /**
  * Returns a jwt token signed by the app secret
  */

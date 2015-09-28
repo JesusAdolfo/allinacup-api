@@ -7,7 +7,7 @@ var courrentTimeStamp = utils.getCurrentDate(now)+" "+utils.getCurrentTime(now);
 var ClientRequestSchema = new Schema({
   idUser: String,
   car: [],
-  status:String,
+  status:{type:String,default:"requested"},
   createdAt: {type:String, default:courrentTimeStamp}
 });
 

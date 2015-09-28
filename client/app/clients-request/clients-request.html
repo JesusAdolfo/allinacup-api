@@ -9,7 +9,7 @@
     <div ng-if="!requests.length" class="text-center col-md-12">
       <h4><strong>There aren't any oders yet!</strong></h4>
     </div>
-        <div id="{{request.request._id}} " ng-repeat="request in requests" class="col-md-12">
+        <div id="{{request.request._id}} " ng-repeat="request in requests" class="col-md-12 check-element sample-show-hide" ng-show="visibility.show[$index]" style="clear:both;">
           <div class="panel panel-primary">
             <div class="panel-heading col-xs-12 col-sm-12 col-md-12">
               <h3 class="panel-title col-xs-7 col-sm-7 col-md-7">Request #{{request.request._id}}</h3>

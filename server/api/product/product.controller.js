@@ -29,6 +29,11 @@ exports.findByType = function(req, res) {
     return res.json(product);
   });
 };
+// Get types of products
+exports.getTypes = function(req, res) {
+  var types = ["FOOD","BEVERAGES","DESSERT"];
+  return res.json({types:types});
+};
 
 // Creates a new product in the DB.
 exports.create = function(req, res) {

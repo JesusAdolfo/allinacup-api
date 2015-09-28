@@ -8,6 +8,7 @@ var ClientRequestSocket = require('./client-request.socket');
 var utils = require('./../../components/utils/index.js');
 var ban = false;
 var io;
+var async = require('async');
 exports.register = function(socket) {
   io=socket;
 
@@ -16,6 +17,7 @@ exports.register = function(socket) {
 // Get list of client_requests
 exports.index = function(req, res) {
   ClientRequest.find({status:'requested'},function (err, client_requests) {
+    console.log('client_requests---->',client_requests);
     if(err) { return handleError(res, err); }
     if(!client_requests.length)return res.status(200).json([]);
     //||join con un solo registro de una tabla
@@ -25,17 +27,27 @@ exports.index = function(req, res) {
     //||ejem: [{idPadre:1,idHijo:id:1}, {idPadre:2,idHijo:id:1}
     //||result: [ { Padre:{ idPadre:1, idHijo:1 }, Hijos: { id:1, atributos } },
     //||{ Padre:{ idPadre:1, idHijo:1 }, Hijo: { id:1, atributos } } ]
+
     return joinWithUsers (client_requests, res, client_requests.length, []);
   });
 };
 
 var joinWithUsers = function(client_requests,res,stop,result){
-   User.findById(client_requests[stop-1].idUser, function (err, user) {
+  stop--;
+  console.log('stop---->',stop);
+   User.findById(client_requests[stop].idUser, function (err, user) {
 
-        if (err) return next(err);
-        if (!user) return res.status(404).send('Not Found');
-     result.push({request:client_requests[stop-1],user:user.profile,car:[]});
-        stop--;
+       if (err) return next(err);
+        if (!user) {
+          if(client_requests.length==1){
+            ban=false;
+            return res.status(200).json([]);
+          }
+          console.log('---->');
+          return joinWithUsers(client_requests, res, stop, result);
+        }
+     result.push({request:client_requests[stop],user:user.profile,car:[]});
+
         if(stop==0)
           //||join con un varios registros de una tabla
           //||params:
@@ -96,10 +108,31 @@ exports.showWithJoin = function(req, res) {
 
 // Creates a new client_request in the DB.
 exports.create = function(req, res) {
-  ban=true;
-  ClientRequest.create(req.body, function(err, client_request) {
-    if(err) { return handleError(res, err); }
-    return joinWithUsers ([client_request], res, 1, []);//res.status(201).json(client_request);//exports.index(req, res);
+  User.findById(req.body.idUser, function (err, user) {
+    if (err) return next(err);
+    if (!user) return res.status(404).send({message:"This user doesn't exits."});
+    async.each(req.body.car, function (item, callback) {
+      Product.findById(item.id, function (err, Product) {
+        console.log('Product---->',Product);
+        if(!Product){return callback({message:"The product ID "+item.id+" doesn't exits."});};
+        if(!err){
+          return callback(null, true);
+        }else{
+          return callback(err);
+        }
+      });
+    }, function (err,result) {
+      if(!err) {
+        ban=true;
+        ClientRequest.create(req.body, function(err, client_request) {
+          if(err) { return handleError(res, err); }
+          return joinWithUsers ([client_request], res, 1, []);//res.status(201).json(client_request);//exports.index(req, res);
+        });
+      }
+      else{
+        return res.status(404).send(err);
+      }
+    });
   });
 };
 

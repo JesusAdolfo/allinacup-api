@@ -11,6 +11,7 @@ var multipartMiddleware = multipart({ uploadDir: path });
 var router = express.Router();
 
 router.get('/', controller.index);
+router.get('/getTypes', controller.getTypes);
 router.get('/:id', controller.show);
 router.get('/byType/:type', controller.findByType);
 router.post('/', multipartMiddleware, controller.create);
@@ -18,4 +19,4 @@ router.put('/:id', multipartMiddleware, controller.update);
 router.patch('/:id', controller.update);
 router.delete('/:id', controller.destroy);
 
-module.exports = router; 
+module.exports = router;
