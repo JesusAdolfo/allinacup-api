@@ -25,7 +25,7 @@ exports.show = function(req, res) {
 exports.findByType = function(req, res) {
   Product.find({type: req.params.type.toUpperCase()}, function (err, products) {
     if(err) { return handleError(res, err); }
-    if(!product) { return res.status(404).send('Not Found'); }
+    if(!products) { return res.status(404).send('Not Found'); }
     return res.json(products);
   });
 };
