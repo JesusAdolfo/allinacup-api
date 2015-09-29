@@ -8,7 +8,6 @@ angular.module('restaurantApp')
     $scope.$apply;
     $scope.user.email='admin@admin.com';
     $scope.user.password='admin';
-    if(Auth.isLoggedIn){ $location.path('/'); }
     $scope.login = function(form) {
       $scope.submitted.get = true;
 

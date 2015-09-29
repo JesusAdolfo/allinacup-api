@@ -23,10 +23,10 @@ exports.show = function(req, res) {
 
 // Get a single product
 exports.findByType = function(req, res) {
-  Product.find({type: req.params.type.toUpperCase()}, function (err, product) {
+  Product.find({type: req.params.type.toUpperCase()}, function (err, products) {
     if(err) { return handleError(res, err); }
     if(!product) { return res.status(404).send('Not Found'); }
-    return res.json(product);
+    return res.json(products);
   });
 };
 // Get types of products
