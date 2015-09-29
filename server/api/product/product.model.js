@@ -3,10 +3,10 @@
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     autoIncrement = require('mongoose-auto-increment');
-    
+
 autoIncrement.initialize(mongoose);
- 
-var ProductSchema = new Schema({ 
+
+var ProductSchema = new Schema({
   name: String,
   description: String,
   price: Number,
@@ -15,6 +15,19 @@ var ProductSchema = new Schema({
   active: Boolean,
   image: String
 });
+ProductSchema
+  .virtual('public_product')
+  .get(function() {
+    return {
+      'id': this._id,
+      'name': this.name,
+      'description': this.description,
+      'price': this.price,
+      'loyaltyPoints': this.loyaltyPoints,
+      'type':this.type,
+      'image':this.image
+    };
+  });
 
 ProductSchema.plugin(autoIncrement.plugin, 'Product');
 

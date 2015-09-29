@@ -92,13 +92,22 @@ angular.module('restaurantApp', [
     // Redirect to login if route requires auth and you're not logged in
     $rootScope.$on('$routeChangeStart', function (event, next) {
       Auth.isLoggedInAsync(function(loggedIn) {
-        if(loggedIn){
+       /* if(loggedIn){
           $("#layout").removeAttr( "style" );
           $rootScope.isLogged=loggedIn;
         }
         if (next.authenticate && !loggedIn) {
           event.preventDefault();
           $location.path('/login');
+        }*/
+        $rootScope.isLogged = loggedIn;
+        if (!loggedIn) {
+          //next.authenticate &&
+          //event.preventDefault();
+          $location.path('/login');
+        }else{
+          if($location.$$path=="/login")
+            $location.path('/');
         }
       });
     });

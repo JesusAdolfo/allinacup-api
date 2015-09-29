@@ -6,15 +6,15 @@ autoIncrement = require('mongoose-auto-increment');;
 var crypto = require('crypto');
 autoIncrement.initialize(mongoose);
 var UserSchema = new Schema({
-  first_name: String,
+  firstName: String,
   email: { type: String, lowercase: true },
   role: {
     type: String,
     default: 'user'
   },
-  last_name: String,
+  lastName: String,
   loyaltyPoints: {type: Number, default: 0},
-  phone_number: String,
+  phoneNumber: String,
   address: String,
   gender: String,
   lvl:{type: Number, default: 1},
@@ -44,9 +44,9 @@ UserSchema
     return {
       '_id': this._id,
       'email': this.email,
-      'first_name': this.first_name,
+      'firstName': this.firstName,
       'role': this.role,
-      'last_name': this.last_name,
+      'lastName': this.lastName,
       'loyaltyPoints': this.loyaltyPoints,
       'lvl':this.lvl
     };
