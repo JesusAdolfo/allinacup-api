@@ -85,6 +85,9 @@ var joinWithProducts = function (r,res,stop,count){
     if(count==0){
       stop--;
        if (stop==0) { if(ban)io.emit('client-request new', r); ban=false;//console.log('something-->');
+         if(r.length==1){
+           return res.status(200).json({order:r[0].request._id});
+         }
          return res.status(200).json(r);};
       count = r[stop-1].request.car.length
       return joinWithProducts(r,res,stop,count);
