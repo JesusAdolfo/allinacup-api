@@ -82,6 +82,7 @@ router.post('/fb', function(req, res, next) {
           var user = {
             email:body.email,
             name:body.first_name,
+            gender:body.gender,
             lastName:body.last_name,
             token:null
           }
