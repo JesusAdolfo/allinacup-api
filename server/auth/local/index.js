@@ -79,9 +79,15 @@ router.post('/fb', function(req, res, next) {
           result.token=token;
           res.json(result);
         }else{
-          body.token=null;
-          console.log('body',body);
-          res.status(201).json(body);
+          //body.token=null;
+          var user = {
+            email:body.email,
+            name:body.first_name,
+            lastName:body.last_name,
+            token:null
+          }
+          console.log('body',user);
+          res.status(201).json(user);
         }
       });
       //res.status(201).json({'success':true});
