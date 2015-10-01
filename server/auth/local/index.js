@@ -82,7 +82,7 @@ router.post('/fb', function(req, res, next) {
           //body.token=null;
           var user = {
             email:body.email,
-            name:body.first_name,
+            firstName:body.first_name,
             gender:body.gender,
             lastName:body.last_name,
             token:null
