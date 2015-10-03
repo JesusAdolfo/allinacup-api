@@ -84,7 +84,7 @@ var joinWithProducts = function (r,res,stop,count){
     }
     if(count==0){
       stop--;
-       if (stop==0) { if(ban)io.emit('client-request new', r); ban=false;//console.log('something-->');
+       if (stop==0) { if(ban && io)io.emit('client-request new', r); ban=false;//console.log('something-->');
          if(r.length==1){
            return res.status(200).json({order:r[0].request._id});
          }
@@ -119,12 +119,18 @@ exports.showWithJoin = function(req, res) {
 
 // Creates a new client_request in the DB.
 exports.create = function(req, res) {
+try{
+//req.body.car = JSON.parse(req.body.car);
+}catch(ex){
+console.log(ex);
+}
+console.log(req.body);
   User.findById(req.body.idUser, function (err, user) {
     if (err) return next(err);
     if (!user) return res.status(404).send({message:"This user doesn't exits."});
     async.each(req.body.car, function (item, callback) {
       Product.findById(item.id, function (err, Product) {
-        console.log('Product---->',Product);
+       // console.log('Product---->',Product);
         if(!Product){return callback({message:"The product ID "+item.id+" doesn't exits."});};
         if(!err){
           return callback(null, true);
