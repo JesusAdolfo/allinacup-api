@@ -99,7 +99,7 @@ angular.module('restaurantApp')
     $scope.user = {};
     $scope.progressbar = ngProgressFactory.createInstance();
 
-    //$scope.progressbar.start();
+    $scope.progressbar.start();
     User.get({ id: $routeParams.idUser }).$promise.then(function(data) {
        // success
        $scope.user = data;
