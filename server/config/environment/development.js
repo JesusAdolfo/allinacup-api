@@ -7,6 +7,6 @@ module.exports = {
   mongo: {
     uri: 'localhost:27017'
   },
-ip:'0.0.0.0',
+  ip:'0.0.0.0',
   seedDB: false
 };

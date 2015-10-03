@@ -75,11 +75,11 @@ angular.module('restaurantApp')
             $scope.progressbar.start();
             Products.remove({ id: id }).$promise.then(function(data) {
               // success
-              $scope.progressbar.stop();
+              $scope.progressbar.complete();
               SweetAlert.swal("Good job!", "Product has been deleted", "success");
             }, function(errResponse) {
               // fail
-              $scope.progressbar.stop();
+              $scope.progressbar.complete();
               SweetAlert.swal("Warning", "Looks like there was a problem", "error");
             });
           }
@@ -110,12 +110,12 @@ angular.module('restaurantApp')
 	            //console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
 	        }).success(function (data, status, headers, config) {
 	            //console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
-              $scope.progressbar.stop();
+              $scope.progressbar.complete();
 	            SweetAlert.swal("Good job!", "Product has been added", "success");
 	            $location.path('/products');
 	        }).error(function (data, status, headers, config) {
 	            console.log('error status: ' + status);
-              $scope.progressbar.stop();
+              $scope.progressbar.complete();
 	            SweetAlert.swal("Warning", "Looks like there was a problem", "error");
 	        });
     	}
@@ -139,11 +139,11 @@ angular.module('restaurantApp')
     Products.get({ id: $routeParams.idProduct }).$promise.then(function(data) {
        // success
        $scope.product = data;
-      $scope.progressbar.stop();
+      $scope.progressbar.complete();
     }, function(errResponse) {
        // fail
       SweetAlert.swal("Warning", "Looks like there was a problem", "error");
-      $scope.progressbar.stop();
+      $scope.progressbar.complete();
     });
      $scope.save = function(){
         $scope.$broadcast('show-errors-check-validity');
@@ -160,12 +160,12 @@ angular.module('restaurantApp')
                 //console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
             }).success(function (data, status, headers, config) {
                 //console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
-                $scope.progressbar.stop();
+                $scope.progressbar.complete();
                 SweetAlert.swal("Good job!", "Product has been added", "success");
                 $location.path('/products');
             }).error(function (data, status, headers, config) {
                 console.log('error status: ' + status);
-                $scope.progressbar.stop();
+                $scope.progressbar.complete();
                 SweetAlert.swal("Warning", "Looks like there was a problem", "error");
             });
         }
