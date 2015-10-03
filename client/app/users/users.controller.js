@@ -54,14 +54,12 @@ angular.module('restaurantApp')
             $scope.progressbar.start();
             User.remove({ id: id }).$promise.then(function(data) {
               // success
+              $scope.progressbar.stop();
               SweetAlert.swal("Good job!", "User has been deleted", "success");
             }, function(errResponse) {
               // fail
-              SweetAlert.swal("Alert!", errResponse.data, "error");
-            }).finally(function(){
-              // // fail
-              $scope.dtInstance.reloadData();
               $scope.progressbar.stop();
+              SweetAlert.swal("Warning", "Looks like there was a problem", "error");
             });
           }
         });
@@ -83,15 +81,13 @@ angular.module('restaurantApp')
     		$scope.user.role='user';
     		User.save($scope.user).$promise.then(function(data) {
                 // success
-                SweetAlert.swal("Good job!", "Product has been deleted", "success");
+                $scope.progressbar.stop();
+                SweetAlert.swal("Good job!", "Product has been saved", "success");
                 $location.path('/users');
             }, function(errResponse) {
                 // fail
-                console.log(errResponse)
-                SweetAlert.swal("Alert!", errResponse.data, "error");
-            }).finally(function(){
-                // // fail
                 $scope.progressbar.stop();
+          SweetAlert.swal("Warning", "Looks like there was a problem", "error");
             });
     	}
     }
@@ -103,18 +99,16 @@ angular.module('restaurantApp')
     $scope.user = {};
     $scope.progressbar = ngProgressFactory.createInstance();
 
-    $scope.progressbar.start();
+    //$scope.progressbar.start();
     User.get({ id: $routeParams.idUser }).$promise.then(function(data) {
        // success
        $scope.user = data;
+      $scope.progressbar.stop();
     }, function(errResponse) {
        // fail
+      $scope.progressbar.stop();
        SweetAlert.swal("Alert!", errResponse.error, "error");
         $location.path('/users');
-    }).finally(function(){
-        // // fail
-      console.log('error<----');
-        $scope.progressbar.stop();
     });
 
     $scope.save = function(){
@@ -124,14 +118,13 @@ angular.module('restaurantApp')
             $scope.user.role='user';
             User.update({id:$routeParams.idUser},$scope.user).$promise.then(function(data) {
                 // success
-                SweetAlert.swal("Good job!", "Product has been deleted", "success");
+              $scope.progressbar.stop();
+                SweetAlert.swal("Good job!", "Product has been updated", "success");
                 $location.path('/users');
             }, function(errResponse) {
                 // fail
-                SweetAlert.swal("Alert!", "There was a problem", "error");
-            }).finally(function(){
-                // // fail
-                $scope.progressbar.stop();
+              $scope.progressbar.stop();
+              SweetAlert.swal("Warning", "Looks like there was a problem", "error");
             });
         }
     }

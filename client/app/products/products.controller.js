@@ -75,13 +75,12 @@ angular.module('restaurantApp')
             $scope.progressbar.start();
             Products.remove({ id: id }).$promise.then(function(data) {
               // success
+              $scope.progressbar.stop();
               SweetAlert.swal("Good job!", "Product has been deleted", "success");
             }, function(errResponse) {
               // fail
-            }).finally(function(){
-              // // fail
-              $scope.dtInstance.reloadData();
               $scope.progressbar.stop();
+              SweetAlert.swal("Warning", "Looks like there was a problem", "error");
             });
           }
         });
@@ -111,13 +110,13 @@ angular.module('restaurantApp')
 	            //console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
 	        }).success(function (data, status, headers, config) {
 	            //console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+              $scope.progressbar.stop();
 	            SweetAlert.swal("Good job!", "Product has been added", "success");
 	            $location.path('/products');
 	        }).error(function (data, status, headers, config) {
 	            console.log('error status: ' + status);
+              $scope.progressbar.stop();
 	            SweetAlert.swal("Warning", "Looks like there was a problem", "error");
-	        }).finally(function (data, status, headers, config) {
-	            $scope.progressbar.complete();
 	        });
     	}
     }
@@ -140,11 +139,11 @@ angular.module('restaurantApp')
     Products.get({ id: $routeParams.idProduct }).$promise.then(function(data) {
        // success
        $scope.product = data;
+      $scope.progressbar.stop();
     }, function(errResponse) {
        // fail
-    }).finally(function(){
-        // // fail
-        $scope.progressbar.stop();
+      SweetAlert.swal("Warning", "Looks like there was a problem", "error");
+      $scope.progressbar.stop();
     });
      $scope.save = function(){
         $scope.$broadcast('show-errors-check-validity');
@@ -161,13 +160,13 @@ angular.module('restaurantApp')
                 //console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
             }).success(function (data, status, headers, config) {
                 //console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+                $scope.progressbar.stop();
                 SweetAlert.swal("Good job!", "Product has been added", "success");
                 $location.path('/products');
             }).error(function (data, status, headers, config) {
                 console.log('error status: ' + status);
+                $scope.progressbar.stop();
                 SweetAlert.swal("Warning", "Looks like there was a problem", "error");
-            }).finally(function (data, status, headers, config) {
-                $scope.progressbar.complete();
             });
         }
     }
