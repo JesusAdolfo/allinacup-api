@@ -17,6 +17,7 @@ var UserSchema = new Schema({
   phoneNumber: String,
   address: String,
   gender: String,
+  age:Number,
   lvl:{type: Number, default: 1},
   hashedPassword: String,
   provider: String,

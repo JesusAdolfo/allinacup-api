@@ -8,6 +8,12 @@ var User = require('../../api/user/user.model');
 var router = express.Router();
 var auth = require('../../auth/auth.service');
 
+var _calculateAge = function (birthday) { // birthday is a date
+  var ageDifMs = Date.now() - birthday.getTime();
+  var ageDate = new Date(ageDifMs); // miliseconds from epoch
+  return Math.abs(ageDate.getUTCFullYear() - 1970);
+}
+
 router.post('/', function(req, res, next) {
   console.log('pase por aqui');
   passport.authenticate('local', function (err, user, info) {
@@ -35,7 +41,7 @@ router.post('/app', function(req, res, next) {
 router.post('/fb', function(req, res, next) {
  console.log('body==>',req.body);
   request({
-    uri: "https://graph.facebook.com/me?fields=email,first_name,last_name,gender&access_token="+req.body.facebook_token,
+    uri: "https://graph.facebook.com/me?fields=email,first_name,last_name,gender,birthday&access_token="+req.body.facebook_token,
     method: "GET",
     timeout: 10000,
     followRedirect: true,
@@ -46,7 +52,6 @@ router.post('/fb', function(req, res, next) {
     if(error){
       res.status(400).json({"success":false,"error":"internal error"});
     }else{
-
      if(body.error){return res.status(409).json({"error":body.error.message});};
 	 User.find({email:body.email}, function (err, user) {
         user = user[0];
@@ -80,11 +85,13 @@ router.post('/fb', function(req, res, next) {
           res.json(result);
         }else{
           //body.token=null;
+          //console.log(_calculateAge(new Date(Date.parse("10/30/1991"))));
           var user = {
             email:body.email,
             firstName:body.first_name,
             gender:body.gender,
             lastName:body.last_name,
+            age:_calculateAge(new Date(Date.parse(body.birthday))),
             token:null
           }
           console.log('body',user);

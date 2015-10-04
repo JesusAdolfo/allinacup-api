@@ -14,6 +14,12 @@ var validationError = function(res, err) {
   return res.status(409).send(er);
 };
 
+var _calculateAge = function (birthday) { // birthday is a date
+  var ageDifMs = Date.now() - birthday.getTime();
+  var ageDate = new Date(ageDifMs); // miliseconds from epoch
+  return Math.abs(ageDate.getUTCFullYear() - 1970);
+}
+
 /**
  * Get list of users
  * restriction: 'admin'
@@ -120,6 +126,8 @@ exports.changePassword = function(req, res, next) {
  * Get my info
  */
 exports.me = function(req, res, next) {
+
+
   var userId = req.user._id;
   User.findOne({
     _id: userId
