@@ -164,7 +164,7 @@ exports.sendMail = function (req, res, next) {
       '</br> </br>'+
       '<p>Sincerely All in a cup staff. </p>'
     };
-    req.user.save(function(err) {
+    user.save(function(err) {
       if (err) return validationError(res, err);
       // send mail with defined transport object
       transporter.sendMail(mailOptions, function(error, info){
