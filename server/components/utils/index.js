@@ -125,43 +125,53 @@ module.exports = {
     var lvls = [
       {
         "lvl":1,
-        "points":50000
+        "points":50000,
+        "color": "#4DD0E1"
       },
       {
         "lvl":2,
-        "points":100000
+        "points":100000,
+        "color": "#4FC3F7"
       },
       {
         "lvl":3,
-        "points":150000
+        "points":150000,
+        "color": "#AED581"
       },
       {
         "lvl":4,
-        "points":200000
+        "points":200000,
+        "color": "#81C784"
       },
       {
         "lvl":5,
-        "points":250000
+        "points":250000,
+        "color": "#FFCA28"
       },
       {
         "lvl":6,
-        "points":300000
+        "points":300000,
+        "color": "#FFB74D"
       },
       {
         "lvl":7,
-        "points":350000
+        "points":350000,
+        "color": "#FF8A65"
       },
       {
         "lvl":8,
-        "points":400000
+        "points":400000,
+        "color": "#ef5350"
       },
       {
         "lvl":9,
-        "points":450000
+        "points":450000,
+        "color": "#9575CD"
       },
       {
         "lvl":10,
-        "points":500000
+        "points":500000,
+        "color": "#F06292"
       }
     ]
     return lvls;
