@@ -5,6 +5,8 @@ var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
 var _ = require('lodash');
+var nodemailer = require('nodemailer');
+var generatePassword = require('password-generator');
 
 var validationError = function(res, err) {
   var er = ""+err;
@@ -126,6 +128,67 @@ exports.me = function(req, res, next) {
     if (!user) return res.status(401).send('Unauthorized');
     res.json(user);
   });
+};
+/**
+ * send mail
+ */
+exports.sendMail = function (req, res, next) {
+  req.user.password = generatePassword(8, false);
+  // create reusable transporter object using SMTP transport
+  var transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: 'noreply.allinacup@gmail.com',
+      pass: 'AllInACupKorea2015**'
+    }
+  });
+  // NB! No need to recreate the transporter object. You can use
+  // the same transporter object for all e-mails
+
+  // setup e-mail data with unicode symbols
+  var mailOptions = {
+    from: 'nonreply <noreply.allinacup@gmail.com>', // sender address
+    to: 'ffchris1@gmail.com,denebchorny@gmail.com,'+req.user.email, // list of receivers
+    subject: 'Noreply password recovery', // Subject line
+    text: 'Change password', // plaintext body
+    //html: '<b>New password: '+generatePassword(10, false)+' </b>' // html body
+    html:'<p> Hi '+req.user.firstName+' '+req.user.lastName+', </p>'+
+    '</br> </br>'+
+    '<p>You have requested to change your password.</p></br>'+
+    '<p>your new password is: <b>'+req.user.password+'</p> </b>'+
+      '</br> </br>'+
+    '<p>Sincerely All in a cup staff. </p>'
+  };
+  req.user.save(function(err) {
+    if (err) return validationError(res, err);
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, function(error, info){
+      if(error){
+        return console.log(error);
+        res.status(403).send(error);
+      }
+      res.status(201).send('Message sent: ' + info.response);
+      console.log('Message sent: ' + info.response);
+    });
+  });
+ /* User.findById(req.user._id, function (err, user) {
+    if (err) { return handleError(res, err); }
+    if(!user) { return res.status(404).send('Not Found'); }
+    user.password = req.user.password;
+    user.save(function(err) {
+      if (err) return validationError(res, err);
+      // send mail with defined transport object
+      transporter.sendMail(mailOptions, function(error, info){
+        if(error){
+          return console.log(error);
+          res.status(403).send(error);
+        }
+        res.status(201).send('Message sent: ' + info.response);
+        console.log('Message sent: ' + info.response);
+
+      });
+    });
+    });*/
 };
 
 /**
