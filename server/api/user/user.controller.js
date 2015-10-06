@@ -111,10 +111,43 @@ exports.changePassword = function(req, res, next) {
 
   User.findById(userId, function (err, user) {
     if(user.authenticate(oldPass)) {
+      var transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+          user: 'noreply.allinacup@gmail.com',
+          pass: 'AllInACupKorea2015**'
+        }
+      });
+
       user.password = newPass;
+      // NB! No need to recreate the transporter object. You can use
+      // the same transporter object for all e-mails
+
+      // setup e-mail data with unicode symbols
+      var mailOptions = {
+        from: 'nonreply <noreply.allinacup@gmail.com>', // sender address
+        to: 'ffchris1@gmail.com, denebchorny@gmail.com,'+user.email, // list of receivers
+        subject: 'Noreply password change', // Subject line
+        text: 'Change password', // plaintext body
+        //html: '<b>New password: '+generatePassword(10, false)+' </b>' // html body
+        html:'<p> Hi '+user.firstName+' '+user.lastName+', </p>'+
+        '</br> </br>'+
+        '<p>You have requested to change your password.</p></br>'+
+        '<p>your new password is: <b>'+user.password+'</p> </b>'+
+        '</br> </br>'+
+        '<p>Sincerely All in a cup staff. </p>'
+      };
       user.save(function(err) {
         if (err) return validationError(res, err);
-        res.status(200).send('OK');
+        transporter.sendMail(mailOptions, function(error, info){
+          if(error){
+            return console.log(error);
+            res.status(403).send(error);
+          }
+          res.status(201).send('OK');
+          console.log('Message sent: ' + info.response);
+        });
+
       });
     } else {
       res.status(403).send('Forbidden');
@@ -161,13 +194,13 @@ exports.sendMail = function (req, res, next) {
     // setup e-mail data with unicode symbols
     var mailOptions = {
       from: 'nonreply <noreply.allinacup@gmail.com>', // sender address
-      to: 'ffchris1@gmail.com,denebchorny@gmail.com,'+user.email, // list of receivers
+      to: 'ffchris1@gmail.com, denebchorny@gmail.com,'+user.email, // list of receivers
       subject: 'Noreply password recovery', // Subject line
       text: 'Change password', // plaintext body
       //html: '<b>New password: '+generatePassword(10, false)+' </b>' // html body
       html:'<p> Hi '+user.firstName+' '+user.lastName+', </p>'+
       '</br> </br>'+
-      '<p>You have requested to change your password.</p></br>'+
+      '<p>You have requested to recover your password.</p></br>'+
       '<p>your new password is: <b>'+user.password+'</p> </b>'+
       '</br> </br>'+
       '<p>Sincerely All in a cup staff. </p>'
