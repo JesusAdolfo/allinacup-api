@@ -86,7 +86,8 @@ router.post('/fb', function(req, res, next) {
         }else{
           //body.token=null;
           //console.log(_calculateAge(new Date(Date.parse("10/30/1991"))));
-          var user = {
+          console.log('body before--->',body);
+	  var user = {
             email:body.email,
             firstName:body.first_name,
             gender:body.gender,
