@@ -92,7 +92,7 @@ router.post('/fb', function(req, res, next) {
             firstName:body.first_name,
             gender:body.gender,
             lastName:body.last_name,
-            age:_calculateAge(new Date(Date.parse(body.birthday))),
+            //age:_calculateAge(new Date(Date.parse(body.birthday))),
             token:null
           }
           console.log('body',user);
