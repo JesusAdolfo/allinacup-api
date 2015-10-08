@@ -14,11 +14,13 @@ var validationError = function(res, err) {
   return res.status(409).send(er);
 };
 
-var _calculateAge = function (birthday) { // birthday is a date
-  var ageDifMs = Date.now() - birthday.getTime();
-  var ageDate = new Date(ageDifMs); // miliseconds from epoch
-  return Math.abs(ageDate.getUTCFullYear() - 1970);
-}
+var transporter = nodemailer.createTransport({
+  service: 'Gmail',
+  auth: {
+    user: 'noreply.allinacup@gmail.com',
+    pass: 'AllInACupKorea2015**'
+  }
+});
 
 /**
  * Get list of users
@@ -111,13 +113,7 @@ exports.changePassword = function(req, res, next) {
 
   User.findById(userId, function (err, user) {
     if(user.authenticate(oldPass)) {
-      var transporter = nodemailer.createTransport({
-        service: 'Gmail',
-        auth: {
-          user: 'noreply.allinacup@gmail.com',
-          pass: 'AllInACupKorea2015**'
-        }
-      });
+
 
       user.password = newPass;
       // NB! No need to recreate the transporter object. You can use
@@ -180,14 +176,7 @@ exports.sendMail = function (req, res, next) {
     if(err) return res.status(500).send(err);
     if(!user) return res.status(404).send("not found");
     user.password = generatePassword(8, false);
-    // create reusable transporter object using SMTP transport
-    var transporter = nodemailer.createTransport({
-      service: 'Gmail',
-      auth: {
-        user: 'noreply.allinacup@gmail.com',
-        pass: 'AllInACupKorea2015**'
-      }
-    });
+
     // NB! No need to recreate the transporter object. You can use
     // the same transporter object for all e-mails
 
