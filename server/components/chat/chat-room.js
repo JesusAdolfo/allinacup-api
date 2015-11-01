@@ -50,7 +50,6 @@ module.exports = function (io) {
 
     socket.on('kick user', function (username) {
 
-      //TODO: check user blocked
       console.log('username: ', username);
 
       var user = _.find(users, 'username', username);
