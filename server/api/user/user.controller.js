@@ -113,8 +113,6 @@ exports.changePassword = function(req, res, next) {
 
   User.findById(userId, function (err, user) {
     if(user.authenticate(oldPass)) {
-
-
       user.password = newPass;
       // NB! No need to recreate the transporter object. You can use
       // the same transporter object for all e-mails
@@ -208,7 +206,6 @@ exports.sendMail = function (req, res, next) {
     });
 
   });
-
 
  /* User.findById(req.user._id, function (err, user) {
     if (err) { return handleError(res, err); }

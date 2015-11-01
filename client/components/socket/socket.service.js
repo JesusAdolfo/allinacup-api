@@ -17,6 +17,42 @@ angular.module('restaurantApp')
 
     return {
       socket: socket,
+      chatInit: function (data) {
+        socket.emit('init chat',data);
+      },
+      kick: function (data) {
+        socket.emit('kick user',data);
+      },
+      wasKicked: function (cb) {
+        cb = cb || angular.noop;
+        /**
+         * Syncs client-request new
+         */
+        socket.on('was kicked', function (item) {
+          cb(item);
+        });
+      },
+      sedMessage: function (data) {
+        socket.emit('send message',data);
+      },
+      receiveMessage: function (cb) {
+        cb = cb || angular.noop;
+        /**
+         * Syncs client-request new
+         */
+        socket.on('new message', function (item) {
+          cb(item);
+        });
+      },
+      notifiNewUser: function (cb) {
+        cb = cb || angular.noop;
+        /**
+         * Syncs client-request new
+         */
+        socket.on('new user', function (item) {
+          cb(item);
+        });
+      },
       getNewOrders: function(cb){
         cb = cb || angular.noop;
         /**
