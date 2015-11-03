@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('restaurantApp')
-  .controller('ClientsRequestCtrl', function ($scope, $resource, DTOptionsBuilder, DTColumnBuilder, $compile, Request, socket,notify	) {
+  .controller('ClientsRequestCtrl', function ($scope, $resource, DTOptionsBuilder, DTColumnBuilder, $compile, Request, socket, notify	) {
     $scope.$parent.title = 'Requests';
     $scope.$parent.subTitle = 'all';
     $scope.$parent.setActive(2);

@@ -52,6 +52,7 @@ UserSchema
       'lvl':this.lvl
     };
   });
+
 UserSchema
   .virtual('profile_app')
   .get(function() {

@@ -27,8 +27,8 @@ angular.module('restaurantApp')
     $scope.isCollapsed = true;
     $scope.isLoggedIn = Auth.isLoggedIn;
     $scope.isAdmin = Auth.isAdmin;
-    $scope.user = User.get();;
-    console.log($scope.user);
+    $scope.user = User.get();
+    //console.log('nav data:',$scope.user);
     $scope.p="dsadas";
     $scope.logout = function() {
       Auth.logout();
