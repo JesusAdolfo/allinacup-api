@@ -14,7 +14,7 @@ module.exports = function (io) {
   io.on('connection', function (socket) {
 
     socket.on('init chat', function (data) {
-
+      data.channel ='default';
       var index = _.findIndex(blackList, function (user) {
         return user == data.username;
       });
@@ -35,7 +35,7 @@ module.exports = function (io) {
       console.log('users', users);
       //io.sockets.in('room')emit('key',data)
 
-      socket.broadcast.to(room).emit('new user', data.user);
+      socket.broadcast.to(room).emit('new user', data.username);
     });
 
 
