@@ -26,6 +26,7 @@ var ipClient=socket.request.connection.remoteAddress.substring(socket.request.co
   console.log('\x1b[0m');
   //socket.emit('client-request new', 'data');
   // Insert sockets below
+  require('../api/media/media.socket').register(socket);
   require('../api/client-request/client-request.socket').register(socket);
   require('../api/client-request/client-request.controller').register(socket);
   require('../api/product/product.socket').register(socket);
