@@ -32,11 +32,23 @@
 		    <label for="points">Loyalty points*</label>
 		    <input type="number" class="form-control" name="points" ng-model="product.loyaltyPoints" placeholder="Loyalty points" required>
 		  </div>
-		  <div class="form-group" show-errors>
+		  <!--<div class="form-group" show-errors>
 		    <label for="file" >File input</label>
 		    <input type="file" ngf-select ng-model="product.file" name="file" ngf-pattern="image/*"
   accept="image/*" ngf-max-size="2MB" ngf-min-height="100">
-		  </div>
+		  </div>-->
+        <div class="row">
+          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <div class="form-group" show-errors>
+              <div class="text-center">
+                <img ng-if="product.image.blobUrl" style="width: auto; height: 200px" ngf-src="product.image">
+                <img ng-if="!product.image.blobUrl" style="width: auto; height: 200px" ng-src="api/media/image?path={{product.image}}">
+              </div>
+              <a class="btn btn-default form-control" accept="image/*" ngf-select="" ng-model="product.image"
+                 name="image" ngf-max-size="2MB" ngf-min-height="100">Select an Image</a>
+            </div>
+          </div>
+        </div>
 		  <button type="submit" ng-click="save()" class="btn btn-primary">Submit</button>
 		</form>
     </div>
