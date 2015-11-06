@@ -18,7 +18,7 @@ module.exports = function (io) {
       var index = _.findIndex(blackList, function (user) {
         return user == data.username;
       });
-
+	console.log('data',data);
       //TODO: verificar si el room al que se va a unir el socket existe!
       if (index >= 0 || data.channel != room) return;
 
@@ -34,7 +34,7 @@ module.exports = function (io) {
       //console.log('socket id',socket.id);
       console.log('users', users);
       //io.sockets.in('room')emit('key',data)
-
+console.log('data to send',data);
       socket.broadcast.to(room).emit('new user', data.username);
     });
 
