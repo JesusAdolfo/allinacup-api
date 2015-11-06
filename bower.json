@@ -13,7 +13,7 @@
     "angular-resource": ">=1.2.*",
     "angular-route": ">=1.2.*",
     "angular-sanitize": ">=1.2.*",
-    "angular-socket-io": "~0.6.0",
+    "angular-socket-io": "~0.7.0",
     "bootstrap": "~3.3.5",
     "es5-shim": "~3.0.1",
     "font-awesome": "fontawesome#~4.4.0",

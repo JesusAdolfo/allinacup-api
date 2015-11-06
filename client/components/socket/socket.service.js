@@ -5,11 +5,13 @@ angular.module('restaurantApp')
   .factory('socket', function(socketFactory) {
 
     // socket.io now auto-configures its connection when we ommit a connection url
-    var ioSocket = io('', {
+    /*var ioSocket = io('http://localhost:9000', {
       // Send auth token on connection, you will need to DI the Auth service above
       // 'query': 'token=' + Auth.getToken()
-      path: '/socket.io-client'
-    });
+      //path: '/socket.io/socket.io.js'
+    });*/
+
+    var ioSocket = socketFactory();
 
     var socket = socketFactory({
       ioSocket: ioSocket

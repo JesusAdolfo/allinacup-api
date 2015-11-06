@@ -15,7 +15,8 @@ angular.module('restaurantApp', [
   'ngProgress',
   'oitozero.ngSweetAlert',
   'cgNotify',
-  'ngAnimate'
+  'ngAnimate',
+  'btford.socket-io'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider, showErrorsConfigProvider) {
     $routeProvider
