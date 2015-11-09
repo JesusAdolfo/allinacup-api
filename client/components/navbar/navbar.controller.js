@@ -4,7 +4,7 @@ angular.module('restaurantApp')
   .controller('NavbarCtrl', function ($rootScope, $scope, $location, Auth, $timeout, $compile, User) {
     $("#layout").removeAttr( "style" );
 
-    $.AdminLTE.pushMenu.activate("[data-toggle='offcanvas']");
+    //$.AdminLTE.pushMenu.activate("[data-toggle='offcanvas']");
     $.AdminLTE.layout.fix();
     var o = $.AdminLTE.options;
     $compile($('nav'))($scope);
@@ -15,7 +15,7 @@ angular.module('restaurantApp')
         alwaysVisible: false,
         size: o.navbarMenuSlimscrollWidth
       }).css("width", "100%");
-      $scope.$apply;
+      //$scope.$apply;
       //$compile($('nav'))($scope);
      },100);
 
