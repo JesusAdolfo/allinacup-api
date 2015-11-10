@@ -17,12 +17,12 @@ module.exports = function (io) {
 
     socket.on('init chat', function (data) {
       data.channel = 'default';
+
       var index = _.findIndex(blackList, function (user) {
         return user.username == data.username;
       });
 
-
-      console.log('data', data);
+     // console.log('data', data);
       //TODO: verificar si el room al que se va a unir el socket existe!
       if (index >= 0 || data.channel != room){
         blackList[index].socketID = socket.id;
@@ -45,6 +45,12 @@ module.exports = function (io) {
       socket.broadcast.to(room).emit('new user', data.username);
     });
 
+    socket.on('connected users', function (username) {
+      var user = _.find(usersOnline, 'username', username);
+
+      io.to(user.socketID).emit('users', usersOnline);
+
+    });
 
     socket.on('send message', function (data) {
 
@@ -82,7 +88,11 @@ module.exports = function (io) {
     socket.on('restore user', function (username) {
       var user = _.find(blackList, 'username', username);
       console.log('restore username: ', user);
-      io.to(user.socketID).emit('was restored', "you were restored!");
+     try{
+       io.to(user.socketID).emit('was restored', "you were restored!");
+     }catch(exception){
+
+     }
 
       _.remove(blackList, function (user) {
         return user.username == username;
