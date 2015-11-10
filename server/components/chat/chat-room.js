@@ -22,7 +22,6 @@ module.exports = function (io) {
         return user.username == data.username;
       });
 
-      // console.log('data', data);
       //TODO: verificar si el room al que se va a unir el socket existe!
       if (index >= 0 || data.channel != room) {
         blackList[index].socketID = socket.id;
@@ -38,7 +37,6 @@ module.exports = function (io) {
         channel: data.channel
       });
 
-      //console.log('socket id',socket.id);
       console.log('usersOnline', usersOnline);
       //io.sockets.in('room')emit('key',data)
       console.log('data to send', data);
@@ -97,9 +95,8 @@ module.exports = function (io) {
       console.log('restore username: ', user);
       try {
         io.to(user.socketID).emit('was restored', "you were restored!");
-      } catch (exception) {
-
       }
+      catch (exception) {}
 
       _.remove(blackList, function (user) {
         return user.username == username;
