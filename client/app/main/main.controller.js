@@ -8,9 +8,14 @@ angular.module('restaurantApp')
     $scope.awesomeThings = [];
     $scope.user = {};
     User.get().$promise.then(function (response) {
-      //console.log('user: ',response);
+
       $scope.user = response;
       socket.chatInit({username:response.email, user:response.firstName, channel:"default"});
+      socket.sedMessage({
+        user:$scope.user.firstName,
+        message:"paso algo vale"
+      });
+      console.log("paso algo vale");
     });
     socket.notifiNewUser(function (data) {
       console.log('new user connected: ',data);
