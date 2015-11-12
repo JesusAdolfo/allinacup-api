@@ -32,12 +32,17 @@ module.exports = function (io) {
       socket.join(data.channel);
 
       socket.username = data.username;
+      socket.nickName = data.nickName;
       var newUser ={
         socketID: socket.id,
         username: socket.username,
         nickName: data.nickName,
         channel: data.channel
       };
+
+      _.remove(usersOnline, function (user) {
+        return user.username == socket.username;
+      });
 
       usersOnline.push(newUser);
 
@@ -64,7 +69,6 @@ module.exports = function (io) {
 
     socket.on('send message', function (data) {
 
-      //TODO: save and send {username:user,nickName:nickname,message:message}
       console.log('message to send', data);
       chatModel.create({sender: data.username, message: data.message}, function (err, result) {
 
@@ -78,7 +82,6 @@ module.exports = function (io) {
 
       var user = _.find(usersOnline, 'username', username);
       console.log('kick username: ', user);
-      //console.log('user: ',io.sockets.connected[user.socketID]);
       if (!user) return;
 
       blackList.push(user);
@@ -117,7 +120,7 @@ module.exports = function (io) {
       });
 
       console.log('discconnect', socket.username);
-      io.sockets.in(room).emit('user disconnected',socket.username);
+      io.sockets.in(room).emit('user disconnected',{username:socket.username,nickName:socket.nickName});
       //socket.broadcast.to(room).emit('user down',data.user);
     });
 
