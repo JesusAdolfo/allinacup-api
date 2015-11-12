@@ -47,7 +47,7 @@ module.exports = function (io) {
       usersOnline.push(newUser);
 
       console.log('usersOnline', usersOnline);
-      io.to(user.socketID).emit('users', usersOnline);
+      io.to(newUser.socketID).emit('users', usersOnline);
       //io.sockets.in(room).emit('cant users',usersOnline.length)
       console.log('data to send', data);
       socket.broadcast.to(room).emit('new user', newUser);
