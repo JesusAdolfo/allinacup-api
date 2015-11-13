@@ -8,6 +8,7 @@ var auth = require('../../auth/auth.service');
 var router = express.Router();
 
 router.get('/', auth.hasRole('admin'), controller.index);
+router.get('/userPoints',auth.isAuthenticated(), controller.getUserPoints);
 router.delete('/:id', auth.hasRole('admin'), controller.destroy);
 router.get('/me', auth.isAuthenticated(), controller.me);
 router.put('/password', auth.isAuthenticated(), controller.changePassword);

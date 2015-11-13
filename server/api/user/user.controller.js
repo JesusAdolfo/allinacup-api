@@ -32,6 +32,15 @@ exports.index = function(req, res) {
     res.status(200).json(users);
   });
 };
+exports.getUserPoints = function(req, res) {
+  User.find({email:req.query.username}, function (err, user) {
+    if(err) return res.status(500).send(err);
+    if(!user[0]) return res.status(404).send('NOT_FOUND');
+    user = user[0];
+    console.log(user.chatProfile);
+    return res.status(200).json(user.chatProfile);
+  });
+};
 
 /**
  * Creates a new user

@@ -52,6 +52,15 @@ UserSchema
       'lvl':this.lvl
     };
   });
+UserSchema
+  .virtual('chatProfile')
+  .get(function() {
+    return {
+      'username': this.email,
+      'loyaltyPoints': this.loyaltyPoints,
+      'lvl':this.lvl
+    };
+  });
 
 UserSchema
   .virtual('profile_app')
