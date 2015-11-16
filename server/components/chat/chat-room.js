@@ -17,6 +17,17 @@ module.exports = function (io) {
 
     socket.on('init chat', function (data) {
       data.channel = 'default';
+      var found = false;
+      _.forEach(usersOnline, function (user) {
+        if(user.username == data.username){
+          user.socketID = socket.id;
+          delete user.timeout;
+          found = true;
+        }
+
+      });
+      if(found)
+        return;
 
       var index = _.findIndex(blackList, function (user) {
         return user.username == data.username;
@@ -112,15 +123,41 @@ module.exports = function (io) {
       });
     });
 
+    socket.on('chat disconnect', function () {
 
-    socket.on('disconnect', function () {
-
+      socket.leave(user.channel);
       _.remove(usersOnline, function (user) {
         return user.username == socket.username;
       });
 
-      console.log('discconnect', socket.username);
       io.sockets.in(room).emit('user disconnected',{username:socket.username,nickName:socket.nickName});
+
+    });
+
+
+
+    socket.on('disconnect', function () {
+      var instance;
+      _.forEach(usersOnline, function (user) {
+        if(user.username == socket.username){
+          user.timeout = true;
+          instance = user;
+        }
+      });
+
+      setTimeout(function () {
+        var instance = _.find(usersOnline, 'username', instance.username);
+        if(instance.timeout){
+          _.remove(usersOnline, function (user) {
+            return user.username == instance.username;
+          });
+
+          console.log('discconnect', instance.username);
+          io.sockets.in(room).emit('user disconnected',{username:instance.username,nickName:instance.nickName});
+        }
+
+      }, 30000);
+
       //socket.broadcast.to(room).emit('user down',data.user);
     });
 
