@@ -10,6 +10,7 @@ var room = "default";
 var messages = [];
 var blackList = [];
 var chatModel = require('./chat.model');
+var User = require('./../../api/user/user.model');
 //var blackListModel = require('./black-list.model');
 module.exports = function (io) {
 
@@ -65,16 +66,25 @@ module.exports = function (io) {
     });
 
     socket.on('connected users', function (username) {
-      var user = _.find(usersOnline, 'username', username);
+      //var user = _.find(usersOnline, 'username', username);
 
-      io.to(user.socketID).emit('users', usersOnline);
-
+      User.findOne({email:username}, function (err, user) {
+        if(err) return;
+        if(!user) return;
+        if(user.role == 'admin')
+          io.to(user.socketID).emit('users', usersOnline);
+      });
     });
 
     socket.on('blacklist users', function (username) {
-      var user = _.find(usersOnline, 'username', username);
+      //var user = _.find(usersOnline, 'username', username);
 
-      io.to(user.socketID).emit('black users', blackList);
+      User.findOne({email:username}, function (err, user) {
+        if(err) return;
+        if(!user) return;
+        if(user.role == 'admin')
+          io.to(user.socketID).emit('black users', blackList);
+      });
 
     });
 
@@ -87,7 +97,6 @@ module.exports = function (io) {
       socket.broadcast.to(room).emit('new message', data);
 
     });
-
 
     socket.on('kick user', function (username) {
 
@@ -133,8 +142,6 @@ module.exports = function (io) {
       io.sockets.in(room).emit('user disconnected',{username:socket.username,nickName:socket.nickName});
 
     });
-
-
 
     socket.on('disconnect', function () {
       var instance;
