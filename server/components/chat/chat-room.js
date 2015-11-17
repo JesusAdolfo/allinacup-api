@@ -57,11 +57,12 @@ module.exports = function (io) {
       });
 
       usersOnline.push(newUser);
-
+      console.log('---------init chat----------');
       console.log('usersOnline', usersOnline);
       io.to(newUser.socketID).emit('users', usersOnline);
       //io.sockets.in(room).emit('cant users',usersOnline.length)
       console.log('data to send', data);
+      console.log('---------init chat----------');
       socket.broadcast.to(room).emit('new user', newUser);
     });
 
@@ -89,8 +90,9 @@ module.exports = function (io) {
     });
 
     socket.on('send message', function (data) {
-
+      console.log('---------send message----------');
       console.log('message to send', data);
+      console.log('--------send message-----------');
       chatModel.create({sender: data.username, message: data.message}, function (err, result) {
 
       });
@@ -138,10 +140,12 @@ module.exports = function (io) {
       _.remove(usersOnline, function (user) {
         return user.username == socket.username;
       });
+      console.log('---------chat disconnect----------');
       console.log({username:socket.username,nickName:socket.nickName});
 
       io.sockets.in(room).emit('user disconnected',{username:socket.username,nickName:socket.nickName});
       console.log('sent');
+      console.log('---------chat disconnect----------');
     });
 
     socket.on('disconnect', function () {
@@ -152,17 +156,21 @@ module.exports = function (io) {
           instance = user;
         }
       });
-
+      console.log('---------disconnect----------');
+      console.log(instance);
+      console.log('---------disconnect----------');
       if(instance)
       setTimeout(function () {
-        var instance = _.find(usersOnline, 'username', instance.username);
-        if(instance.timeout){
+        var user = _.find(usersOnline, 'username', instance.username);
+        console.log(user);
+        if(user.timeout){
           _.remove(usersOnline, function (user) {
-            return user.username == instance.username;
+            return user.username == user.username;
           });
-
-          console.log('discconnect', instance.username);
-          io.sockets.in(room).emit('user disconnected',{username:instance.username,nickName:instance.nickName});
+          console.log('---------disconnect----------');
+          console.log(user.username);
+          console.log('---------disconnect----------');
+          io.sockets.in(room).emit('user disconnected',{username:user.username,nickName:user.nickName});
         }
 
       }, 30000);
