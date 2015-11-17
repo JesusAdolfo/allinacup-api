@@ -134,13 +134,14 @@ module.exports = function (io) {
 
     socket.on('chat disconnect', function () {
 
-      socket.leave(user.channel);
+      socket.leave(room);
       _.remove(usersOnline, function (user) {
         return user.username == socket.username;
       });
+      console.log({username:socket.username,nickName:socket.nickName});
 
       io.sockets.in(room).emit('user disconnected',{username:socket.username,nickName:socket.nickName});
-
+      console.log('sent');
     });
 
     socket.on('disconnect', function () {
