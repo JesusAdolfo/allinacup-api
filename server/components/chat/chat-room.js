@@ -66,6 +66,22 @@ module.exports = function (io) {
       socket.broadcast.to(room).emit('new user', newUser);
     });
 
+    socket.on('change nickName', function (nickName) {
+
+
+
+
+      socket.broadcast.to(room).emit('user nickName changed',
+        {username:socket.username,
+        oldNick:socket.nickName,
+        newNick:nickName
+        }
+      );
+
+      socket.nickName = nickName;
+
+    });
+
     socket.on('connected users', function (username) {
       //var user = _.find(usersOnline, 'username', username);
 
