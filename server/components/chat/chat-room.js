@@ -141,7 +141,6 @@ module.exports = function (io) {
         return user.username == socket.username;
       });
       console.log('---------chat disconnect----------');
-      console.log(socket);
       console.log({username:socket.username,nickName:socket.nickName});
 
       io.sockets.in(room).emit('user disconnected',{username:socket.username,nickName:socket.nickName});
@@ -158,6 +157,7 @@ module.exports = function (io) {
         }
       });
       console.log('---------disconnect----------');
+      console.log(socket);
       console.log(instance);
       console.log('---------disconnect----------');
       if(instance)
