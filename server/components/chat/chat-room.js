@@ -157,7 +157,7 @@ module.exports = function (io) {
         }
       });
       console.log('---------disconnect----------');
-      console.log(socket);
+      console.log(socket.username);
       console.log(instance);
       console.log('---------disconnect----------');
       if(instance)
