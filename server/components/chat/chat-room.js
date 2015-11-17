@@ -145,7 +145,7 @@ module.exports = function (io) {
     });
 
     socket.on('disconnect', function () {
-      var instance;
+      var instance = null;
       _.forEach(usersOnline, function (user) {
         if(user.username == socket.username){
           user.timeout = true;
@@ -153,6 +153,7 @@ module.exports = function (io) {
         }
       });
 
+      if(instance)
       setTimeout(function () {
         var instance = _.find(usersOnline, 'username', instance.username);
         if(instance.timeout){
