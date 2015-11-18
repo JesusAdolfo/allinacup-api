@@ -22,6 +22,9 @@ module.exports = function (io) {
       console.log(data.username);
 
       data.channel = 'default';
+      socket.username = data.username;
+      socket.nickName = data.nickName;
+
       var found = false;
       _.forEach(usersOnline, function (user) {
         if(user.username == data.username){
@@ -32,10 +35,10 @@ module.exports = function (io) {
 
       });
       if(found){
+        console.log('usersOnline', usersOnline);
         socket.join(data.channel);
         return;
       }
-
 
       var index = _.findIndex(blackList, function (user) {
         return user.username == data.username;
@@ -50,8 +53,6 @@ module.exports = function (io) {
 
       socket.join(data.channel);
 
-      socket.username = data.username;
-      socket.nickName = data.nickName;
       var newUser ={
         socketID: socket.id,
         username: socket.username,
