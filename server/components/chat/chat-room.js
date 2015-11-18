@@ -19,6 +19,8 @@ module.exports = function (io) {
     socket.on('init chat', function (data) {
 
       console.log('---------init chat----------');
+      console.log(data.username);
+
       data.channel = 'default';
       var found = false;
       _.forEach(usersOnline, function (user) {
@@ -63,7 +65,7 @@ module.exports = function (io) {
       console.log('usersOnline', usersOnline);
       io.to(newUser.socketID).emit('users', usersOnline);
       //io.sockets.in(room).emit('cant users',usersOnline.length)
-      console.log('data to send', data);
+      console.log(data);
       console.log('---------init chat----------');
       socket.broadcast.to(room).emit('new user', newUser);
     });
