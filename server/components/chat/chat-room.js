@@ -190,7 +190,7 @@ module.exports = function (io) {
           io.sockets.in(room).emit('user disconnected',{username:user.username,nickName:user.nickName});
         }
 
-      }, 10000);
+      }, 5000);
 
       //socket.broadcast.to(room).emit('user down',data.user);
     });
