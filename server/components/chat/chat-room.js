@@ -184,9 +184,9 @@ module.exports = function (io) {
           _.remove(usersOnline, function (user) {
             return user.username == user.username;
           });
-          console.log('---------disconnect----------');
+          console.log('---------setTimeout----------');
           console.log(user.username);
-          console.log('---------disconnect----------');
+          console.log('---------setTimeout----------');
           io.sockets.in(room).emit('user disconnected',{username:user.username,nickName:user.nickName});
         }
 
