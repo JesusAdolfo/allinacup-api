@@ -31,8 +31,11 @@ module.exports = function (io) {
         }
 
       });
-      if(found)
+      if(found){
+        socket.join(data.channel);
         return;
+      }
+
 
       var index = _.findIndex(blackList, function (user) {
         return user.username == data.username;
