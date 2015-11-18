@@ -17,6 +17,8 @@ module.exports = function (io) {
   io.on('connection', function (socket) {
 
     socket.on('init chat', function (data) {
+
+      console.log('---------init chat----------');
       data.channel = 'default';
       var found = false;
       _.forEach(usersOnline, function (user) {
@@ -57,7 +59,7 @@ module.exports = function (io) {
       });
 
       usersOnline.push(newUser);
-      console.log('---------init chat----------');
+
       console.log('usersOnline', usersOnline);
       io.to(newUser.socketID).emit('users', usersOnline);
       //io.sockets.in(room).emit('cant users',usersOnline.length)
@@ -179,7 +181,7 @@ module.exports = function (io) {
       if(instance)
       setTimeout(function () {
         var user = _.find(usersOnline, 'username', instance.username);
-        console.log(user);
+
         if(user.timeout){
           _.remove(usersOnline, function (user) {
             return user.username == user.username;
@@ -189,7 +191,10 @@ module.exports = function (io) {
           console.log('---------setTimeout----------');
           io.sockets.in(room).emit('user disconnected',{username:user.username,nickName:user.nickName});
         }
-
+        else{
+          console.log('---------else---setTimeout----------');
+        }
+        console.log(user);
       }, 10000);
 
       //socket.broadcast.to(room).emit('user down',data.user);
