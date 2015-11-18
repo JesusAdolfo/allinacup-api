@@ -193,8 +193,9 @@ module.exports = function (io) {
         }
         else{
           console.log('---------else---setTimeout----------');
+          console.log(user);
         }
-        console.log(user);
+
       }, 10000);
 
       //socket.broadcast.to(room).emit('user down',data.user);
