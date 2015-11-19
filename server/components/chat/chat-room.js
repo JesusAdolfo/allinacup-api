@@ -17,6 +17,9 @@ module.exports = function (io) {
   io.on('connection', function (socket) {
 
     socket.on('init chat', function (data) {
+      data.channel = 'default';
+      socket.username = data.username;
+      socket.nickName = data.nickName;
 
       var index = _.findIndex(blackList, function (user) {
         return user.username == data.username;
@@ -32,9 +35,7 @@ module.exports = function (io) {
       console.log('---------init chat----------');
       console.log(data.username);
 
-      data.channel = 'default';
-      socket.username = data.username;
-      socket.nickName = data.nickName;
+
       socket.join(data.channel);
       var found = false;
       _.forEach(usersOnline, function (user) {
