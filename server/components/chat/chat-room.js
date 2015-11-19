@@ -93,13 +93,16 @@ module.exports = function (io) {
 
     socket.on('connected users', function (username) {
       //var user = _.find(usersOnline, 'username', username);
-
+      console.log('---------connected users----------');
       User.findOne({email:username}, function (err, user) {
         if(err) return;
         if(!user) return;
         if(user.role == 'admin')
-          io.to(user.socketID).emit('users', usersOnline);
+        console.log(user);
+          io.to(socket.id).emit('users', usersOnline);
+        console.log('---------connected users----------');
       });
+
     });
 
     socket.on('blacklist users', function (username) {
