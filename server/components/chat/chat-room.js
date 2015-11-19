@@ -47,12 +47,12 @@ module.exports = function (io) {
       });
       if(found){
         console.log('usersOnline', usersOnline);
-        io.to(user.socketID).emit('set status', true);
+        io.to(socket.id).emit('set status', true);
 
         return;
       }
 
-      io.to(user.socketID).emit('set status', true);
+      io.to(socket.id).emit('set status', true);
       var newUser ={
         socketID: socket.id,
         username: socket.username,
