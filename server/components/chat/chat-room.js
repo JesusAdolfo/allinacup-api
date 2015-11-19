@@ -112,7 +112,7 @@ module.exports = function (io) {
         if(err) return;
         if(!user) return;
         if(user.role == 'admin')
-          io.to(user.socketID).emit('black users', blackList);
+          io.to(socket.id).emit('black users', blackList);
       });
 
     });
