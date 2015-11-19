@@ -167,7 +167,7 @@ module.exports = function (io) {
       });
       console.log('---------chat disconnect----------');
       console.log({username:socket.username,nickName:socket.nickName});
-      io.to(user.socketID).emit('set status', false);
+      io.to(socket.id).emit('set status', false);
       io.sockets.in(room).emit('user disconnected',{username:socket.username,nickName:socket.nickName});
       console.log('sent');
       console.log('---------chat disconnect----------');
