@@ -18,28 +18,6 @@ module.exports = function (io) {
 
     socket.on('init chat', function (data) {
 
-      console.log('---------init chat----------');
-      console.log(data.username);
-
-      data.channel = 'default';
-      socket.username = data.username;
-      socket.nickName = data.nickName;
-
-      var found = false;
-      _.forEach(usersOnline, function (user) {
-        if(user.username == data.username){
-          user.socketID = socket.id;
-          delete user.timeout;
-          found = true;
-        }
-
-      });
-      if(found){
-        console.log('usersOnline', usersOnline);
-        socket.join(data.channel);
-        return;
-      }
-
       var index = _.findIndex(blackList, function (user) {
         return user.username == data.username;
       });
@@ -51,8 +29,30 @@ module.exports = function (io) {
         return;
       }
 
-      socket.join(data.channel);
+      console.log('---------init chat----------');
+      console.log(data.username);
 
+      data.channel = 'default';
+      socket.username = data.username;
+      socket.nickName = data.nickName;
+      socket.join(data.channel);
+      var found = false;
+      _.forEach(usersOnline, function (user) {
+        if(user.username == data.username){
+          user.socketID = socket.id;
+          delete user.timeout;
+          found = true;
+        }
+
+      });
+      if(found){
+        console.log('usersOnline', usersOnline);
+        io.to(user.socketID).emit('set status', true);
+
+        return;
+      }
+
+      io.to(user.socketID).emit('set status', true);
       var newUser ={
         socketID: socket.id,
         username: socket.username,
@@ -166,7 +166,7 @@ module.exports = function (io) {
       });
       console.log('---------chat disconnect----------');
       console.log({username:socket.username,nickName:socket.nickName});
-
+      io.to(user.socketID).emit('set status', false);
       io.sockets.in(room).emit('user disconnected',{username:socket.username,nickName:socket.nickName});
       console.log('sent');
       console.log('---------chat disconnect----------');
