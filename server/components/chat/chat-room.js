@@ -215,7 +215,7 @@ module.exports = function (io) {
       setTimeout(function () {
         var user = _.find(usersOnline, 'username', instance.username);
 
-        if(user.timeout){
+        if(user && user.timeout){
           _.remove(usersOnline, function (user) {
             return user.username == user.username;
           });
