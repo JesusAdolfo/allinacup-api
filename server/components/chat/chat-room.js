@@ -129,37 +129,60 @@ module.exports = function (io) {
     });
 
     socket.on('kick user', function (username) {
+      console.log('---------kick user----------');
+      User.findOne({email:socket.username}, function (err, user) {
+        if(err) return;
+        if(!user) return;
+        if(user.role == 'admin'){
+          var user = _.find(usersOnline, 'username', username);
+          console.log('kick username: ', user);
+          if (!user) return;
 
-      var user = _.find(usersOnline, 'username', username);
-      console.log('kick username: ', user);
-      if (!user) return;
+          blackList.push(user);
 
-      blackList.push(user);
+          _.remove(usersOnline, function (user) {
+            return user.username == username;
+          });
 
-      _.remove(usersOnline, function (user) {
-        return user.username == username;
+          io.sockets.connected[user.socketID].leave(user.channel);
+
+          socket.broadcast.to(room).emit('user kicked',user);
+
+          io.to(user.socketID).emit('was kicked', "you were kicked!");
+          console.log('---------kick user----------');
+        }
+
       });
 
-      io.sockets.connected[user.socketID].leave(user.channel);
 
-      socket.broadcast.to(room).emit('user kicked',user);
-
-      io.to(user.socketID).emit('was kicked', "you were kicked!");
 
     });
 
     socket.on('restore user', function (username) {
-      var user = _.find(blackList, 'username', username);
-      console.log('restore username: ', user);
-      try {
-        //socket.broadcast.to(room).emit('user restored', {username:user.username,usersOnline:usersOnline});
-        io.to(user.socketID).emit('was restored', "you were restored!");
-      }
-      catch (exception) {}
+      console.log('---------restore user----------');
 
-      _.remove(blackList, function (user) {
-        return user.username == username;
+      User.findOne({email:socket.username}, function (err, user) {
+        if(err) return;
+        if(!user) return;
+        if(user.role == 'admin'){
+          var user = _.find(blackList, 'username', username);
+          console.log('restore username: ', user);
+          try {
+            //socket.broadcast.to(room).emit('user restored', {username:user.username,usersOnline:usersOnline});
+            io.to(user.socketID).emit('was restored', "you were restored!");
+          }
+          catch (exception) {}
+
+          _.remove(blackList, function (user) {
+            return user.username == username;
+          });
+          console.log('---------restore user----------');
+        }
+
       });
+
+
+
     });
 
     socket.on('chat disconnect', function () {
