@@ -7,7 +7,6 @@ var request = require("request");
 var User = require('../../api/user/user.model');
 var router = express.Router();
 var auth = require('../../auth/auth.service');
-var jwt = require('jsonwebtoken');
 
 var _calculateAge = function (birthday) { // birthday is a date
   var ageDifMs = Date.now() - birthday.getTime();
@@ -81,7 +80,8 @@ router.post('/fb', function(req, res, next) {
             //res.json(user);
           });*/
           //var token = "ASDersdf==?SFdfdf[SDF+f";
-          var token = jwt.sign({_id: user._id }, config.secrets.session, { expiresInMinutes: 525600 });
+          //var token = jwt.sign({_id: user._id }, config.secrets.session, { expiresInMinutes: 525600 });
+          var token = auth.signToken(user._id, user.role);
           var result = user.profile_app;
           result.token=token;
           res.json(result);
