@@ -12,7 +12,7 @@ var _calculateAge = function (birthday) { // birthday is a date
   var ageDifMs = Date.now() - birthday.getTime();
   var ageDate = new Date(ageDifMs); // miliseconds from epoch
   return Math.abs(ageDate.getUTCFullYear() - 1970);
-}
+};
 
 router.post('/', function(req, res, next) {
   console.log('pase por aqui');
@@ -52,9 +52,10 @@ router.post('/fb', function(req, res, next) {
     if(error){
       res.status(400).json({"success":false,"error":"internal error"});
     }else{
-     if(body.error){return res.status(409).json({"error":body.error.message});};
-	 User.find({email:body.email}, function (err, user) {
-        user = user[0];
+     if(body.error) return res.status(409).json({"error":body.error.message});
+
+	 User.findOne({email:body.email}, function (err, user) {
+        //user = user[0];
         if (err) return next(err);
         if (user){
           console.log('user',user);
