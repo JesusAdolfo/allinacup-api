@@ -7,6 +7,7 @@ var request = require("request");
 var User = require('../../api/user/user.model');
 var router = express.Router();
 var auth = require('../../auth/auth.service');
+var jwt = require('jsonwebtoken');
 
 var _calculateAge = function (birthday) { // birthday is a date
   var ageDifMs = Date.now() - birthday.getTime();
