@@ -5,7 +5,6 @@ angular.module('restaurantApp')
     $scope.$parent.title = 'Users';
     $scope.$parent.subTitle = 'all';
     $scope.$parent.setActive(0);
-    $scope.dtInstance = {};
     $scope.progressbar = ngProgressFactory.createInstance();
 	$scope.dtInstance={};
 

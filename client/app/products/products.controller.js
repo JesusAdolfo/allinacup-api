@@ -75,6 +75,7 @@ angular.module('restaurantApp')
             $scope.progressbar.start();
             Products.remove({ id: id }).$promise.then(function(data) {
               // success
+              $scope.dtInstance.reloadData();
               $scope.progressbar.complete();
               SweetAlert.swal("Good job!", "Product has been deleted", "success");
             }, function(errResponse) {
