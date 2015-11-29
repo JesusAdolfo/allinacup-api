@@ -306,8 +306,8 @@ module.exports = function (grunt) {
       }
     },
 
-    // Package all the html partials into a single javascript payload
-    ngtemplates: {
+    // Package all the html partials into a single javascrip
+ ngtemplates: {
       options: {
         // This should be the name of your apps angular module
         module: 'restaurantApp',
