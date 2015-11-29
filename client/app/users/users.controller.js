@@ -83,7 +83,7 @@ angular.module('restaurantApp')
     		User.save($scope.user).$promise.then(function(data) {
                 // success
                 $scope.progressbar.complete();
-                SweetAlert.swal("Good job!", "Product has been saved", "success");
+                SweetAlert.swal("Good job!", "User has been saved", "success");
                 $location.path('/users');
             }, function(errResponse) {
                 // fail
@@ -120,7 +120,7 @@ angular.module('restaurantApp')
             User.update({id:$routeParams.idUser},$scope.user).$promise.then(function(data) {
                 // success
               $scope.progressbar.complete();
-                SweetAlert.swal("Good job!", "Product has been updated", "success");
+                SweetAlert.swal("Good job!", "User has been updated", "success");
                 $location.path('/users');
             }, function(errResponse) {
                 // fail
