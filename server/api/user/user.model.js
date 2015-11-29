@@ -49,7 +49,8 @@ UserSchema
       'role': this.role,
       'lastName': this.lastName,
       'loyaltyPoints': this.loyaltyPoints,
-      'lvl':this.lvl
+      'lvl':this.lvl,
+      'age':this.age
     };
   });
 UserSchema
