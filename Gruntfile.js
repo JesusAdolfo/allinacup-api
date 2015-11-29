@@ -1,3 +1,5 @@
+
+
 // Generated on 2015-09-01 using generator-angular-fullstack 2.1.0
 'use strict';
 
