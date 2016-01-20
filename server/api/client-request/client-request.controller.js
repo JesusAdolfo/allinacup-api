@@ -75,7 +75,15 @@ var joinWithProducts = function (r,res,stop,count){
   //var count=r[stop-1].request.car.length;
   Product.findById(r[stop-1].request.car[count-1].id, function (err, product) {
     if (err) return next(err);
-    if (!product) return res.status(404).send('Not Found');
+    if (!product){
+      //return res.status(404).send('Not Found');
+      count--;
+      if(count>0){
+        return joinWithProducts(r,res,stop,count);
+      }
+      if(count==0)
+        return res.status(200).json(r);
+    }
     //console.log('r==>',product);
     r[stop-1].car.push(product);
     count--;
