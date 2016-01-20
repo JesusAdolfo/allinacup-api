@@ -86,8 +86,6 @@ exports.destroy = function(req, res) {
           if(index >=0)
           return -1;
         })
-
-        console.log('index', index);
         if(index >=0)
           return res.status(409).send('Cannot_delete');
 
