@@ -92,11 +92,10 @@ exports.destroy = function(req, res) {
         if(index >=0)
           return res.status(409).send('Cannot_delete');
 
-        return res.status(204).send('No Content');
-       /* product.remove(function(err) {
+        product.remove(function(err) {
           if(err) { return handleError(res, err); }
           return res.status(204).send('No Content');
-        });*/
+        })
       });
 
     }else{
