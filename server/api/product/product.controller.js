@@ -78,10 +78,15 @@ exports.destroy = function(req, res) {
       if(!product) { return res.status(404).send('Not Found'); }
 
       ClientRequest.find({status:'requested'},function (err, client_requests) {
-        var index = _.findIndex(client_requests.car, function (item) {
-          console.log('item', item.id);
-          return item.id==req.params.id;
+        _.forEach(client_requests, function (client_request) {
+          var index = _.findIndex(client_request.car, function (item) {
+            console.log('item', item.id);
+            return item.id==req.params.id;
+          })
+          if(index >=0)
+          return -1;
         })
+
         console.log('index', index);
         if(index >=0)
           return res.status(409).send('Cannot_delete');
