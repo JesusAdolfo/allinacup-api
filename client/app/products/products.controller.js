@@ -80,8 +80,12 @@ angular.module('restaurantApp')
               SweetAlert.swal("Good job!", "Product has been deleted", "success");
             }, function(errResponse) {
               // fail
+
               $scope.progressbar.complete();
-              SweetAlert.swal("Warning", "Looks like there was a problem", "error");
+              if(errResponse.status == 409)
+                SweetAlert.swal("Warning", "This product is been using by a user request", "error");
+              else
+                SweetAlert.swal("Warning", "Looks like there was a problem", "error");
             });
           }
         });
