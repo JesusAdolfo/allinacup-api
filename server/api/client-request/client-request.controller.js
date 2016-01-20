@@ -81,8 +81,6 @@ var joinWithProducts = function (r,res,stop,count){
       if(count>0){
         return joinWithProducts(r,res,stop,count);
       }
-      if(count==0)
-        return res.status(200).json(r);
     }
     //console.log('r==>',product);
     r[stop-1].car.push(product);
