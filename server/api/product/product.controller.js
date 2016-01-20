@@ -3,7 +3,7 @@
 var _ = require('lodash');
 var Product = require('./product.model');
 var utils = require('./../../components/utils/index.js');
-
+var ClientRequest = require('./../client-request/client-request.model');
 // Get list of products
 exports.index = function(req, res) {
   Product.find(function (err, products) {
@@ -76,10 +76,19 @@ exports.destroy = function(req, res) {
     if(utils.deletePath(product.image),1){
       if(err) { return handleError(res, err); }
       if(!product) { return res.status(404).send('Not Found'); }
-      product.remove(function(err) {
-        if(err) { return handleError(res, err); }
-        return res.status(204).send('No Content');
+
+      ClientRequest.find({status:'requested'},function (err, client_requests) {
+        var index = _.findIndex(client_requests.car, function (item) {
+          return item.id==req.params.id;
+        })
+        if(index >=0)
+          return res.status(409).send('Cannot_delete');
+        product.remove(function(err) {
+          if(err) { return handleError(res, err); }
+          return res.status(204).send('No Content');
+        });
       });
+
     }else{
       return res.status(500).send('image error deleting');
     }
