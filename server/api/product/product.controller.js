@@ -72,6 +72,9 @@ exports.update = function(req, res) {
 
 // Deletes a product from the DB.
 exports.destroy = function(req, res) {
+
+  var index = -1;
+
   Product.findById(req.params.id, function (err, product) {
     if(utils.deletePath(product.image),1){
       if(err) { return handleError(res, err); }
@@ -79,7 +82,7 @@ exports.destroy = function(req, res) {
 
       ClientRequest.find({status:'requested'},function (err, client_requests) {
         _.forEach(client_requests, function (client_request) {
-          var index = _.findIndex(client_request.car, function (item) {
+          index = _.findIndex(client_request.car, function (item) {
             console.log('item', item.id);
             return item.id==req.params.id;
           })
