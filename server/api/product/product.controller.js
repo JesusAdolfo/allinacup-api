@@ -79,14 +79,18 @@ exports.destroy = function(req, res) {
 
       ClientRequest.find({status:'requested'},function (err, client_requests) {
         var index = _.findIndex(client_requests.car, function (item) {
+          console.log('item', item.id);
           return item.id==req.params.id;
         })
+        console.log('index', index);
         if(index >=0)
           return res.status(409).send('Cannot_delete');
-        product.remove(function(err) {
+
+        return res.status(204).send('No Content');
+       /* product.remove(function(err) {
           if(err) { return handleError(res, err); }
           return res.status(204).send('No Content');
-        });
+        });*/
       });
 
     }else{
