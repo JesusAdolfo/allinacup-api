@@ -64,6 +64,15 @@ angular.module('restaurantApp')
           cb(item);
         });
       },
+      orderProcessed: function(cb){
+        cb = cb || angular.noop;
+        /**
+         * Syncs client-request new
+         */
+        socket.on('order-processed', function (item) {
+          cb(item);
+        });
+      },
 
       /**
        * Register listeners to sync an array with updates on a model

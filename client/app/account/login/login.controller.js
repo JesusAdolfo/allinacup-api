@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('restaurantApp')
-  .controller('LoginCtrl', function ($scope, Auth, $location) {
+  .controller('LoginCtrl', function ($scope, Auth, $location, $rootScope) {
     $scope.user = {};
     $scope.errors = {};
     $scope.submitted = {};
@@ -19,6 +19,7 @@ angular.module('restaurantApp')
         })
         .then( function() {
           // Logged in, redirect to home
+          $rootScope.isLogged = true;
           $location.path('/');
         })
         .catch( function(err) {

@@ -36,6 +36,8 @@ require('./config/socketio')(socketio);
 require('./config/express')(app);
 require('./routes')(app);
 
+require('./api/client-request/client-request.controller').register(socketio);
+
 require('./components/chat/chat-room')(socketio);
 
 // Start server
