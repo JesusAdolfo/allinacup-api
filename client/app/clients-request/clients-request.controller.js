@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('restaurantApp')
-  .controller('ClientsRequestCtrl', function ($scope, $resource, DTOptionsBuilder, DTColumnBuilder, $compile, Request, socket, notify	) {
+  .controller('ClientsRequestCtrl', function ($scope, $resource, DTOptionsBuilder, DTColumnBuilder, $compile, Request, socket, $location	) {
     $scope.$parent.title = 'Requests';
     $scope.$parent.subTitle = 'all';
     $scope.$parent.setActive(2);
@@ -11,8 +11,9 @@ angular.module('restaurantApp')
     $scope.template = '';
     $scope.classes = 'alert-success';
     position: $scope.position = 'center';
-
-    $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
+    $scope.loading = true;
+    $scope.requestDeleted = 0;
+  /*  $scope.dtOptions = DTOptionsBuilder.fromFnPromise(function() {
         return $resource('api/client-requests').query().$promise;
         //return User.query().$promise;
     })
@@ -42,25 +43,30 @@ angular.module('restaurantApp')
     $scope.edit = function(id){
     	console.log(id);
  		//$location.path('/users/update/'+id);
-    };
+    };*/
 
 
     Request.query().$promise.then(function(response){
 
       //socket.unsyncNewOrders();
+
       angular.forEach(response,function(item){
         $scope.visibility.show.push(true);
       });
       $scope.requests = response;
+      $scope.loading = false;
       socket.getNewOrders(function(x){
         console.log('===>');
         $scope.requests.push(x[0]);
         $scope.visibility.show.push(true);
       });
 
+    },function(err){
+      SweetAlert.swal("Warning", "Looks like there was a problem", "error");
+      $location.path('/');
     });
 
-    $scope.process = function(order,index,type){
+    $scope.process = function(order, index, type){
       //console.log('Done',order);
       /*car: Array[4]
        createdAt: "15/9/2015 10:02 PM"
@@ -68,15 +74,23 @@ angular.module('restaurantApp')
        status: "requested"*/
       //var send = {car:order.car, idUser:order.idUser, status:'requested', createdAt:order.createdAt};
       //console.log('send',send);
-
       order.update = type;
-      Request.update({id:order.request._id},order).$promise.then(function(response){
-        console.log('Done',response);
-        //$scope.visibility[index]=false;
-        $scope.visibility.show[index]=false;
+      order.index = index;
+      Request.update({id:order.request._id}, order).$promise.then(function(response){
+        //console.log('Done',response);
+        console.log('Done Rest',index);
+        //$scope.visibility.show[index]=false;
        // $scope.requests.splice(index,1);
       });
     }
+    socket.orderProcessed(function(response){
+      console.log('Done Socket',response);
+      if(response.success == true){
+        $scope.visibility.show[response.index]=false;
+        $scope.requestDeleted++;
+        //$scope.requests.splice(index,1);
+      }
+    })
 
     /*socket.socket.on('client-request new',function(data){
       console.log('response request',data);

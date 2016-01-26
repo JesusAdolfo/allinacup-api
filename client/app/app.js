@@ -57,7 +57,7 @@ angular.module('restaurantApp', [
   }).controller('appCtrl', function ($rootScope, $scope, $http, Auth, socket, notify, breadcrumbs, $location) {
 
     //$rootScope.isLogged=false;
-
+    $rootScope.isLogged = $location.$$path!="/login"
     $scope.breadcrumbs = breadcrumbs;
     $scope.title = '';
     $scope.subTitle = '';

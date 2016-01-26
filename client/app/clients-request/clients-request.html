@@ -6,9 +6,16 @@
        	<div class="col-md-12">
          <table datatable="" dt-options="dtOptions" dt-columns="dtColumns" dt-instance="dtInstance" class="row-border hover"></table>
       </div>-->
-    <div ng-if="!requests.length" class="text-center col-md-12">
-      <h4><strong>There are no orders yet!</strong></h4>
-    </div>
+
+  <div ng-if="loading" class="sk-folding-cube">
+    <div class="sk-cube1 sk-cube"></div>
+    <div class="sk-cube2 sk-cube"></div>
+    <div class="sk-cube4 sk-cube"></div>
+    <div class="sk-cube3 sk-cube"></div>
+  </div>
+  <div ng-if="!loading && (!requests || (requests.length - requestDeleted)==0)" class="text-center col-md-12">
+    <h4><strong>There are no orders yet!</strong></h4>
+  </div>
 
   <div  ng-repeat="request in requests" class="box-body check-element sample-show-hide" ng-show="visibility.show[$index]" style="clear:both;" >
     <div class="box box-solid box-primary">
@@ -27,7 +34,7 @@
             <div class="col-md-12">
               <br/>
               <span style="font-size: 18px;"><b>Email:</b> </span>{{request.user.email}}<br/>
-              <span style="font-size: 18px;"><b>Name:</b> </span>{{request.user.firstName}}<br/>
+              <span style="font-size: 18px;"><b>Name:</b> </span>{{request.user.firstName}} {{request.user.lastName}}<br/>
             </div>
           </div>
           <hr/>
@@ -56,6 +63,7 @@
                   <td>{{product.name}}</td>
                   <td ng-if="request.request.car[$index].observation.length>30" style="width:50px;"><textarea ng-disabled="true" ng-model="request.request.car[$index].observation" cols="30" rows="2"></textarea> </td>
                   <td ng-if="request.request.car[$index].observation.length<=30" style="width:50px;"><textarea ng-disabled="true" ng-model="request.request.car[$index].observation" cols="30" rows="1"></textarea> </td>
+                  <td ng-if="request.request.car[$index].observation==null" style="width:50px;"><textarea ng-disabled="true" ng-model="request.request.car[$index].observation" cols="30" rows="1"></textarea> </td>
                   <td><input type="number" min="0" max="{{request.request.car[$index].cant}}" ng-model="request.request.car[$index].cantA" ng-value="request.request.car[$index].cant"/></td>
                   <td>{{product.price}}</td>
                   <!--<td><button class="btn btn-success"><i class="fa fa-check"></i></button> <button class="btn btn-danger"><i class="fa fa-close"></i></button></td>-->

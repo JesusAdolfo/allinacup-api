@@ -3,15 +3,15 @@
 // Production specific configuration
 // =================================
 module.exports = {
-  /*// Server IP
+  // Server IP
   ip:       process.env.OPENSHIFT_NODEJS_IP ||
             process.env.IP ||
-            undefined,
+            '0.0.0.0',
 
   // Server port
   port:     process.env.OPENSHIFT_NODEJS_PORT ||
             process.env.PORT ||
-            8080,
+            80,
 
   // MongoDB connection options
   mongo: {
@@ -19,10 +19,10 @@ module.exports = {
             process.env.MONGOHQ_URL ||
             process.env.OPENSHIFT_MONGODB_DB_URL+process.env.OPENSHIFT_APP_NAME ||
             'mongodb://localhost/restaurant'
-  }*/
-  mongo: {
-    uri: 'localhost:27017'
+  }
+ /* mongo: {
+    uri: 'localhost:27017/restaurant'
   },
   ip:'0.0.0.0',
-  port:9000
+  port:9000*/
 };
