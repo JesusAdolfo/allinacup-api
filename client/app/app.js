@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('restaurantApp', [
-  'ngCookies',
+//'templates', 
+ 'ngCookies',
   'ngResource',
   'ngSanitize',
   'ngRoute',
