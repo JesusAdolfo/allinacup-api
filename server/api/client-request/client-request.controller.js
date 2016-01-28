@@ -138,11 +138,12 @@ console.log(req.body);
       });
     }, function (err,result) {
       if(!err) {
-        ban=true;
+        req.body.createdAt = new Date().toISOString();
         ClientRequest.create(req.body, function(err, client_request) {
           if(err) { return handleError(res, err); }
           getClienRequest([client_request], true, function(result){
-            return res.status(200).json(result);
+            //return res.status(200).json(result);
+            return res.status(200).json({order:result[0].request._id,date:req.body.createdAt});
           })
           //return joinWithUsers ([client_request], res, 1, []);//res.status(201).json(client_request);//exports.index(req, res);
         });
