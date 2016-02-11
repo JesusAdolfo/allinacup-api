@@ -101,6 +101,16 @@ exports.show = function(req, res) {
     return res.json(client_request);
   });
 };
+
+//get request by user
+exports.showByUser = function(req, res) {
+  ClientRequest.find({idUser: req.user._id}, '-car', function (err, client_request) {
+    if(err) { return handleError(res, err); }
+    if(!client_request) { return res.status(404).send('Not Found'); }
+    return res.json(client_request);
+  });
+};
+
 // Get a single client_request
 exports.showWithJoin = function(req, res) {
 
