@@ -178,8 +178,8 @@ exports.me = function(req, res, next) {
  */
 exports.sendMail = function (req, res, next) {
 
-  User.find({email:req.body.email}, '-salt -hashedPassword', function (err, user) {
-    user = user[0];
+  User.findOne({email:req.body.email}, '-salt -hashedPassword', function (err, user) {
+    //user = user[0];
     if(err) return res.status(500).send(err);
     if(!user) return res.status(404).send("not found");
     user.password = generatePassword(8, false);

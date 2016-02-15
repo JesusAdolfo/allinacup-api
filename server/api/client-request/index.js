@@ -6,6 +6,7 @@ var controller = require('./client-request.controller');
 var router = express.Router();
 
 router.get('/', controller.index);
+router.get('/by-user', controller.showByUser);
 router.get('/get/:id', controller.showWithJoin);
 router.get('/:id', controller.show);
 router.post('/', controller.create);
