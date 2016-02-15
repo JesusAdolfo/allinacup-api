@@ -95,7 +95,7 @@ exports.index = function(req, res) {
 
 // Get a single client_request
 exports.show = function(req, res) {
-  ClientRequest.findById(req.params.id, function (err, client_request) {
+  ClientRequest.findById(req.params.id,'-__v', function (err, client_request) {
     if(err) { return handleError(res, err); }
     if(!client_request) { return res.status(404).send('Not Found'); }
     return res.json(client_request);
@@ -104,7 +104,11 @@ exports.show = function(req, res) {
 
 //get request by user
 exports.showByUser = function(req, res) {
-  ClientRequest.find({idUser: req.user._id}, '-car', function (err, client_request) {
+  ClientRequest.find({idUser: req.user._id}, '-__v', {
+    sort:{
+      createdAt: -1 //Sort by Date Added DESC
+    }
+  }, function (err, client_request) {
     if(err) { return handleError(res, err); }
     if(!client_request) { return res.status(404).send('Not Found'); }
     return res.json(client_request);
