@@ -9,9 +9,9 @@ var nodemailer = require('nodemailer');
 var generatePassword = require('password-generator');
 
 var validationError = function(res, err) {
-  var er = ""+err;
-  er.replace("[","").replace("]","")
-  return res.status(409).send(er);
+  //var er = ""+err;
+  //er.replace("[","").replace("]","")
+  return res.status(409).json({error:err})
 };
 
 var transporter = nodemailer.createTransport({
