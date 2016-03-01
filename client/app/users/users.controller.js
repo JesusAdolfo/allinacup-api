@@ -20,6 +20,8 @@ angular.module('restaurantApp')
         DTColumnBuilder.newColumn('_id').withTitle('ID'),
         DTColumnBuilder.newColumn('email').withTitle('Username'),
         DTColumnBuilder.newColumn('firstName').withTitle('Name'),
+        DTColumnBuilder.newColumn('lvl').withTitle('Level'),
+        DTColumnBuilder.newColumn('loyaltyPoints').withTitle('Loyalty Points'),
         DTColumnBuilder.newColumn(null).withTitle('Actions').notSortable()
             .renderWith(actionsHtml)
        // DTColumnBuilder.newColumn('lastName').withTitle('Last name').notVisible()

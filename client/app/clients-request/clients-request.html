@@ -31,11 +31,15 @@
       </div><!-- /.box-header -->
       <div class="box-body">
           <div class="row" >
-            <div class="col-md-12">
+            <div class="col-md-6">
               <br/>
               <span style="font-size: 18px;"><b>Email:</b> </span>{{request.user.email}}<br/>
               <span style="font-size: 18px;"><b>Name:</b> </span>{{request.user.firstName}} {{request.user.lastName}}<br/>
               <span style="font-size: 18px;"><b>Phone number:</b> </span>{{request.user.phoneNumber}}<br/>
+            </div>
+            <div class="col-md-6">
+              <br/>
+              <span style="font-size: 18px;"><b>Loyalty Program:</b> </span>level {{request.user.lvl}} - points {{request.user.loyaltyPoints}}<br/>
             </div>
           </div>
           <hr/>
@@ -48,6 +52,7 @@
                   <th>Product</th>
                   <th>Product observation</th>
                   <th>Cant</th>
+                  <th>Loyalty P</th>
                   <th>Price <i class="fa fa-krw"></i></th>
                   <th>Total  <i class="fa fa-krw"></i></th>
                 </tr>
@@ -66,6 +71,7 @@
                   <td ng-if="request.request.car[$index].observation.length<=30" style="width:50px;"><textarea ng-disabled="true" ng-model="request.request.car[$index].observation" cols="30" rows="1"></textarea> </td>
                   <td ng-if="request.request.car[$index].observation==null" style="width:50px;"><textarea ng-disabled="true" ng-model="request.request.car[$index].observation" cols="30" rows="1"></textarea> </td>
                   <td><input type="number" min="0" max="{{request.request.car[$index].cant}}" ng-model="request.request.car[$index].cantA" ng-value="request.request.car[$index].cant"/></td>
+                  <td>{{product.loyaltyPoints}}</td>
                   <td>{{product.price}}</td>
                   <!--<td><button class="btn btn-success"><i class="fa fa-check"></i></button> <button class="btn btn-danger"><i class="fa fa-close"></i></button></td>-->
                   <td>{{product.price|itemTotal:request.request.car[$index].cantA}}</td>
@@ -75,7 +81,7 @@
             </div>
 
           </div>
-          Total: <i class="fa fa-krw"></i> {{request|total}}
+        Total LP: {{request|totalLP}} Total: <i class="fa fa-krw"></i> {{request|total}}
       </div><!-- /.box-body -->
     </div><!-- /.box -->
 

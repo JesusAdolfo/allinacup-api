@@ -40,7 +40,18 @@ angular.module('restaurantApp')
 
       return sum;*/
     };
-  }).filter('itemTotal', function () {
+  }).filter('totalLP', function () {
+  return function (item, key) {
+    var sum = 0;
+    angular.forEach(item.car, function (x, key) {
+      if(item.request.car[key].cantA==undefined)
+        item.request.car[key].cantA = parseInt(item.request.car[key].cant);
+      sum += x.loyaltyPoints*parseInt(item.request.car[key].cantA);
+    });
+    return sum;
+
+  };
+}).filter('itemTotal', function () {
     return function (price,cant) {
      return price*cant;
     };

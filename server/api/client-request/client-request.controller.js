@@ -32,7 +32,14 @@ var getClienRequest = function (client_requests, sendEmit, callback) {
         })
         result.push({
           request: request,//{_id:request._id, createdAt: request.createdAt, status: request.status},
-          user:{firstName : user.firstName, lastName : user.lastName, email : user.email, phoneNumber: user.phoneNumber},
+          user:{
+            firstName : user.firstName,
+            lastName : user.lastName,
+            email : user.email,
+            phoneNumber: user.phoneNumber,
+            lvl: user.lvl,
+            loyaltyPoints: user.loyaltyPoints
+          },
           car:carTmp
         })
         callback(null,true);
