@@ -10,18 +10,18 @@ angular.module('restaurantApp')
     User.get().$promise.then(function (response) {
       //console.log('user: ',response);
       $scope.user = response;
-      socket.chatInit({username:response.email, user:response.firstName, channel:"default"});
+      //socket.chatInit({username:response.email, user:response.firstName, channel:"default"});
     });
-    socket.notifiNewUser(function (data) {
+    /*socket.notifiNewUser(function (data) {
       console.log('new user connected: ',data);
     });
     socket.receiveMessage(function (data) {
       console.log('new message: %s from : %s',data.message,data.user);
     });
     $scope.kickUser = function () {
-     /* socket.kick({
+     /!* socket.kick({
         user:"chris"
-      });*/
+      });*!/
       socket.kick("chris");
     };
     socket.wasKicked(function (data) {
@@ -32,7 +32,7 @@ angular.module('restaurantApp')
         user:$scope.user.firstName,
         message:$scope.message
       });
-    };
+    };*/
 
     $http.get('/api/things').success(function(awesomeThings) {
       $scope.awesomeThings = awesomeThings;

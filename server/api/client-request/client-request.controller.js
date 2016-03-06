@@ -118,7 +118,10 @@ exports.showByUser = function(req, res) {
   }, function (err, client_request) {
     if(err) { return handleError(res, err); }
     if(!client_request) { return res.status(404).send('Not Found'); }
-    return res.json(client_request);
+    getClienRequest(client_request, false, function(result){
+      return res.status(200).json(result);
+    })
+    //return res.json(client_request);
   });
 };
 
