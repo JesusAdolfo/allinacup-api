@@ -46,6 +46,7 @@ module.exports = function (io) {
         }
 
       });
+
       if(found){
         console.log('usersOnline', usersOnline);
         io.to(socket.id).emit('set status', true);
