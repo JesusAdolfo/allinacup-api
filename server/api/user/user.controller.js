@@ -129,7 +129,7 @@ exports.changePassword = function(req, res, next) {
       // setup e-mail data with unicode symbols
       var mailOptions = {
         from: 'nonreply <noreply.allinacup@gmail.com>', // sender address
-        to: 'ffchris1@gmail.com, denebchorny@gmail.com,'+user.email, // list of receivers
+        to: user.email, // list of receivers
         subject: 'Noreply password change', // Subject line
         text: 'Change password', // plaintext body
         //html: '<b>New password: '+generatePassword(10, false)+' </b>' // html body
@@ -143,17 +143,14 @@ exports.changePassword = function(req, res, next) {
       user.save(function(err) {
         if (err) return validationError(res, err);
         transporter.sendMail(mailOptions, function(error, info){
-          if(error){
-            return console.log(error);
-            res.status(403).send(error);
-          }
-          res.status(201).send('OK');
-          console.log('Message sent: ' + info.response);
+          if(error) return res.status(403).json({error:error});
+
+          return res.status(201).json({success:true});
         });
 
       });
     } else {
-      res.status(403).send('Forbidden');
+      return res.status(403).json({error:'Forbidden'});
     }
   });
 };
