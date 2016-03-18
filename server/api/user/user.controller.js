@@ -202,12 +202,9 @@ exports.sendMail = function (req, res, next) {
       if (err) return validationError(res, err);
       // send mail with defined transport object
       transporter.sendMail(mailOptions, function(error, info){
-        if(error){
-          return console.log(error);
-          res.status(403).send(error);
-        }
-        res.status(201).send('Message sent: ' + info.response);
-        console.log('Message sent: ' + info.response);
+        if(error) return res.status(403).json({error:error});
+
+        return res.status(201).json({success:true});
       });
     });
 
