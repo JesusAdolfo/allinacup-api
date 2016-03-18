@@ -143,7 +143,7 @@ exports.changePassword = function(req, res, next) {
       user.save(function(err) {
         if (err) return validationError(res, err);
         transporter.sendMail(mailOptions, function(error, info){
-          if(error) return res.status(403).json({error:error});
+          //if(error) return res.status(403).json({error:error});
 
           return res.status(201).json({success:true});
         });
