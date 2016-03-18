@@ -187,7 +187,7 @@ exports.sendMail = function (req, res, next) {
     // setup e-mail data with unicode symbols
     var mailOptions = {
       from: 'nonreply <noreply.allinacup@gmail.com>', // sender address
-      to: 'ffchris1@gmail.com, denebchorny@gmail.com,'+user.email, // list of receivers
+      to: user.email, // list of receivers
       subject: 'Noreply password recovery', // Subject line
       text: 'Change password', // plaintext body
       //html: '<b>New password: '+generatePassword(10, false)+' </b>' // html body
