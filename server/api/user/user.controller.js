@@ -62,7 +62,6 @@ exports.create = function (req, res, next) {
  */
 exports.createCostumer = function (req, res, next) {
   var newUser = new User(req.body);
-  console.log("creating a new user",req.body);
   newUser.provider = 'local';
   newUser.role = 'costumer';
   newUser.save(function(err, user) {

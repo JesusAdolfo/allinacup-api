@@ -15,7 +15,6 @@ var _calculateAge = function (birthday) { // birthday is a date
 };
 
 router.post('/', function(req, res, next) {
-  console.log('pase por aqui');
   passport.authenticate('local', function (err, user, info) {
     var error = err || info;
     if (error) return res.status(401).json(error);
@@ -27,7 +26,6 @@ router.post('/', function(req, res, next) {
   })(req, res, next)
 });
 router.post('/app', function(req, res, next) {
-  console.log('pase por aqui');
   passport.authenticate('local', function (err, user, info) {
     var error = err || info;
     if (error) return res.status(401).json(error);
