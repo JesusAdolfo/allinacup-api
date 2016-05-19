@@ -1,5 +1,4 @@
 
-
 // Generated on 2015-09-01 using generator-angular-fullstack 2.1.0
 'use strict';
 
@@ -306,8 +305,8 @@ module.exports = function (grunt) {
       }
     },
 
-    // Package all the html partials into a single javascript payload
-    ngtemplates: {
+    // Package all the html partials into a single javascrip
+ ngtemplates: {
       options: {
         // This should be the name of your apps angular module
         module: 'restaurantApp',
@@ -355,6 +354,8 @@ module.exports = function (grunt) {
             'bower_components/**/*',
             'assets/images/{,*/}*.{webp}',
             'assets/fonts/**/*',
+            'app/**/*.html',
+            'components/**/*.html',
             'index.html'
           ]
         }, {
@@ -420,7 +421,7 @@ module.exports = function (grunt) {
       },
       dist: [
         'babel',
-        'imagemin',
+        //'imagemin'
         'svgmin'
       ]
     },
