@@ -157,7 +157,7 @@ angular.module('restaurantApp')
             Upload.upload({
                 url: 'api/products/'+$routeParams.idProduct,
                 fields: $scope.product,
-                file: $scope.product.file,
+                file: $scope.product.image,
                 method:"PUT"
             }).progress(function (evt) {
                 var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);

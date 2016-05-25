@@ -57,14 +57,14 @@ exports.update = function(req, res) {
     if(!product) { return res.status(404).send('Not Found'); }
 
       var result = utils.moveFromTempTo(req.files.file,'products');
-      if(result.error!=null){
-        console.log(result.error);
+
+      if(result.error==null){
         req.body.image = result.value;
         if(!utils.deletePath(product.image)) return res.status(500).send('image error deleting');
       }
       var updated = _.merge(product, req.body);
       product.save(updated,function (err) {
-        if (err) { return handleError(res, err); }
+        if (err) { return handleError(gtres, err); }
         return res.status(200).json(product);
       });
   });
