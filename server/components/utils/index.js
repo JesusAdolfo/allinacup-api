@@ -70,6 +70,7 @@ module.exports = {
     var result = {error : null, value:""};
     //console.log(path);
     if (file === null || file === undefined) {
+      var result = {error : 'field file empty', value:""};
       return result;
     }
 
