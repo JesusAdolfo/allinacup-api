@@ -6,7 +6,9 @@ var utils = require('./../../components/utils/index.js');
 var ClientRequest = require('./../client-request/client-request.model');
 // Get list of products
 exports.index = function(req, res) {
-  Product.find(function (err, products) {
+  Product.find({}).sort({
+      order: 1 //Sort by order Added DESC
+  }).exec(function (err, products) {
     if(err) { return handleError(res, err); }
     return res.status(200).json(products);
   });
@@ -68,6 +70,25 @@ exports.update = function(req, res) {
         return res.status(200).json(product);
       });
   });
+};
+exports.addField = function(req, res) {
+  Product.find(function (err, products) {
+    if (err) { return handleError(res, err); }
+    if(!products) { return res.status(404).send('Not Found'); }
+
+    _.forEach(products, function (product) {
+
+      product.order = product._id;
+
+      product.save(function (err) {
+        if (err) { return handleError(res, err); }
+
+
+      });
+    });
+
+  });
+  setTimeout(function(){ return res.status(200).json({success:true});},3000)
 };
 
 // Deletes a product from the DB.

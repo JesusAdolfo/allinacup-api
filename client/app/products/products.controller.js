@@ -16,6 +16,7 @@ angular.module('restaurantApp')
     .withOption('createdRow', createdRow);
 
     $scope.dtColumns = [
+        DTColumnBuilder.newColumn('order').withTitle('Order').notVisible(),
         DTColumnBuilder.newColumn('_id').withTitle('ID'),
         DTColumnBuilder.newColumn('name').withTitle('Name'),
         DTColumnBuilder.newColumn('loyaltyPoints').withTitle('Loyalty points'),

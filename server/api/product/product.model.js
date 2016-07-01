@@ -13,7 +13,8 @@ var ProductSchema = new Schema({
   loyaltyPoints: Number,
   type: { type: String, uppercase: true },
   active: Boolean,
-  image: String
+  image: String,
+  order: Number
 });
 ProductSchema
   .virtual('public_product')
