@@ -20,6 +20,9 @@ var getClienRequest = function (client_requests, sendEmit, callback) {
           var product = _.find(products, function(item) {
             return item._id == car.id;
           });
+          if(!product){
+            return callback(null,true);
+          }
           carTmp.push({
             _id : product._id,
             name : product.name,
@@ -29,7 +32,7 @@ var getClienRequest = function (client_requests, sendEmit, callback) {
             cantA : car.cantA,
             observation : car.observation
           })
-        })
+        });
         result.push({
           request: request,//{_id:request._id, createdAt: request.createdAt, status: request.status},
           user:{
@@ -41,7 +44,7 @@ var getClienRequest = function (client_requests, sendEmit, callback) {
             loyaltyPoints: user.loyaltyPoints
           },
           car:carTmp
-        })
+        });
         callback(null,true);
         /*async.eachSeries(request.car, function iterator(car, callback) {
          Product.findById(car.id, function (err, product) {
