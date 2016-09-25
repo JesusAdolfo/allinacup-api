@@ -20,31 +20,34 @@ var getClienRequest = function (client_requests, sendEmit, callback) {
           var product = _.find(products, function(item) {
             return item._id == car.id;
           });
-          if(!product){
-            return callback(null,true);
+          if(product){
+            carTmp.push({
+              _id : product._id,
+              name : product.name,
+              price : product.price,
+              loyaltyPoints : product.loyaltyPoints,
+              cant : car.cant,
+              cantA : car.cantA,
+              observation : car.observation
+            })
           }
-          carTmp.push({
-            _id : product._id,
-            name : product.name,
-            price : product.price,
-            loyaltyPoints : product.loyaltyPoints,
-            cant : car.cant,
-            cantA : car.cantA,
-            observation : car.observation
-          })
+
         });
-        result.push({
-          request: request,//{_id:request._id, createdAt: request.createdAt, status: request.status},
-          user:{
-            firstName : user.firstName,
-            lastName : user.lastName,
-            email : user.email,
-            phoneNumber: user.phoneNumber,
-            lvl: user.lvl,
-            loyaltyPoints: user.loyaltyPoints
-          },
-          car:carTmp
-        });
+        if(carTmp.length>0){
+          result.push({
+            request: request,//{_id:request._id, createdAt: request.createdAt, status: request.status},
+            user:{
+              firstName : user.firstName,
+              lastName : user.lastName,
+              email : user.email,
+              phoneNumber: user.phoneNumber,
+              lvl: user.lvl,
+              loyaltyPoints: user.loyaltyPoints
+            },
+            car:carTmp
+          });
+        }
+
         callback(null,true);
         /*async.eachSeries(request.car, function iterator(car, callback) {
          Product.findById(car.id, function (err, product) {
